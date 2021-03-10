@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 File    : paperwatch
@@ -6,14 +6,14 @@ Author  : A. Dareau
 
 Comments: paperwatch routine
 """
-#%% Imports
+# %% Imports
 
 import urllib
 import feedparser as fp
 import re
 import webbrowser
 import os
-import ConfigParser 
+import configparser
 import sys
 
 from datetime import datetime, timedelta
@@ -21,12 +21,12 @@ from time import mktime
 
 import html_style as html
 
-#%% Global Variables
+# %% Global Variables
 
 # Configuration
-CONF_PATH = os.path.join('.','config', '%s.conf')
+CONF_PATH = os.path.join(".", "config", "%s.conf")
 # for server
-#CONF_PATH = "/home/lodahu/Scripts/paperwatch/config/%s.conf"
+# CONF_PATH = "/home/lodahu/Scripts/paperwatch/config/%s.conf"
 KEYWORDS = {}
 FEEDS = {}
 FEEDS_ORDER = []
@@ -34,8 +34,8 @@ DAYS = 8
 SETTINGS = {}
 
 # Save options
-INDIV_REPORT_FOLDER = 'individual_reports'
-DATE_FMT = '%Y_%m_%d'
+INDIV_REPORT_FOLDER = "individual_reports"
+DATE_FMT = "%Y_%m_%d"
 
 # Global collections
 ALL_PAPERS = {}
@@ -46,116 +46,128 @@ QUIET = False
 DEBUG = []
 TEST_RUN = False
 
-# Test run option 
-try:
+# Test run option
+if len(sys.argv) > 1:
     mode = sys.argv[1]
     if mode == "test":
         TEST_RUN = True
-    
-except:
-    pass
- 
-   
-#%% Side functions - subroutines
 
-### Text cleaning and formatting
+# %% Side functions - subroutines
+
+# -- Text cleaning and formatting
+
 
 def _cleanhtml(raw_html):
-  cleanr = re.compile('<.*?>')
-  cleantext = re.sub(cleanr, '', raw_html)
-  return cleantext
+    cleanr = re.compile("<.*?>")
+    cleantext = re.sub(cleanr, "", raw_html)
+    return cleantext
+
 
 def _convtohtml(unicode_str):
-    out = unicode_str.encode('ascii', 'xmlcharrefreplace')
-    return out
-    
+    #out = unicode_str.encode("ascii", "xmlcharrefreplace")
+    # TODO : remove this function !
+    # useless in python3 .
+    return unicode_str
+
+
 def _cleantitle(raw_title):
-  cleanr = re.compile('\(arXiv:.*?].*?\)')
-  cleantext = re.sub(cleanr, '', raw_title)
-  return cleantext
+    cleanr = re.compile("\(arXiv:.*?].*?\)")
+    cleantext = re.sub(cleanr, "", raw_title)
+    return cleantext
+
 
 def _explode_and_trim(str_in):
-    list_out = str_in.split(',')
+    list_out = str_in.split(",")
     list_out = [e.strip() for e in list_out]
     return list_out
+
 
 def _qprint(strg):
     global QUIET
     if not QUIET:
         print(strg)
 
+
 def _prdelim():
-    _qprint('-'*30)
+    _qprint("-" * 30)
+
 
 def _prsubdelim():
-    _qprint('-'*15)
-    
-### Setting handling
-    
+    _qprint("-" * 15)
+
+
+# -- Setting handling
+
+
 def load_keywords():
     global CONF_PATH, KEYWORDS
-    #-- parse config file
-    cp = ConfigParser.ConfigParser()
-    cp.read(CONF_PATH%'keywords')
-    #-- populate dictionnary
+    # -- parse config file
+    cp = configparser.ConfigParser()
+    cp.read(CONF_PATH % "keywords")
+    # -- populate dictionnary
     KEYWORDS = {}
     for cat in cp.sections():
         KEYWORDS[cat] = {}
-        KEYWORDS[cat]['display_name'] = cp.get(cat, 'display_name')
-        KEYWORDS[cat]['fields'] = _explode_and_trim(cp.get(cat,'fields'))
-        KEYWORDS[cat]['keywords'] = _explode_and_trim(cp.get(cat,'keywords'))
-    
+        KEYWORDS[cat]["display_name"] = cp.get(cat, "display_name")
+        KEYWORDS[cat]["fields"] = _explode_and_trim(cp.get(cat, "fields"))
+        KEYWORDS[cat]["keywords"] = _explode_and_trim(cp.get(cat, "keywords"))
+
+
 def load_feeds():
     global FEEDS, FEEDS_ORDER, CONF_PATH
-    #-- parse config file
-    cp = ConfigParser.ConfigParser()
-    cp.read(CONF_PATH%'feeds')
-    #-- populate dictionnary
+    # -- parse config file
+    cp = configparser.ConfigParser()
+    cp.read(CONF_PATH % "feeds")
+    # -- populate dictionnary
     FEEDS = {}
     for feed in cp.sections():
-        if feed == 'global':
-            FEEDS_ORDER = _explode_and_trim(cp.get(feed, 'cat_order'))
+        if feed == "global":
+            FEEDS_ORDER = _explode_and_trim(cp.get(feed, "cat_order"))
         else:
-            cat = cp.get(feed, 'category').strip()
-            if not FEEDS.has_key(cat):
+            cat = cp.get(feed, "category").strip()
+            if cat not in FEEDS:
                 FEEDS[cat] = {}
             FEEDS[cat][feed] = {}
-            FEEDS[cat][feed]['display_name'] = cp.get(feed, 'display_name')
-            FEEDS[cat][feed]['url'] = cp.get(feed, 'url')
-            FEEDS[cat][feed]['save_all'] = eval(cp.get(feed, 'save_all'))
-            FEEDS[cat][feed]['check_date'] = eval(cp.get(feed, 'check_date'))
+            FEEDS[cat][feed]["display_name"] = cp.get(feed, "display_name")
+            FEEDS[cat][feed]["url"] = cp.get(feed, "url")
+            FEEDS[cat][feed]["save_all"] = eval(cp.get(feed, "save_all"))
+            FEEDS[cat][feed]["check_date"] = eval(cp.get(feed, "check_date"))
+
 
 def load_settings():
     global CONF_PATH, SETTINGS
-    #-- parse config file
-    cp = ConfigParser.ConfigParser()
-    cp.read(CONF_PATH%'settings')
-    #-- populate dictionnary
+    # -- parse config file
+    cp = configparser.ConfigParser()
+    cp.read(CONF_PATH % "settings")
+    # -- populate dictionnary
     SETTINGS = {}
-    SETTINGS['output'] = {'out_directory' : cp.get('output','out_directory')}
-         
-#%% Core functions
+    SETTINGS["output"] = {"out_directory": cp.get("output", "out_directory")}
 
-### Get and process papers
+
+# %% Core functions
+
+# -- Get and process papers
+
 
 def get_papers_from_rss(feed):
-    #-- read rss flux
-    url = feed['url']
-    raw_data = urllib.urlopen(url).read()
+    # -- read rss flux
+    url = feed["url"]
+    raw_data = urllib.request.urlopen(url).read()
     data = fp.parse(raw_data)
-    papers = data['entries']
-    
-    #-- get in good format
+    papers = data["entries"]
+
+    # -- get in good format
     if papers != []:
         while not isinstance(papers[0], dict):
             papers = papers[0]
-            
-    #-- keep recent papers if needed
-    if feed['check_date']:
+
+    # -- keep recent papers if needed
+    if feed["check_date"]:
         papers = keep_recent_papers(papers)
         pass
-        
+
     return papers
+
 
 def keep_recent_papers(papers):
     global DAYS
@@ -164,251 +176,262 @@ def keep_recent_papers(papers):
     start_date = day_start - timedelta(days=DAYS)
     recent_papers = []
     for p in papers:
-        if p.has_key('updated_parsed'):
-            date = p['updated_parsed']
+        if "updated_parsed" in p:
+            date = p["updated_parsed"]
             date = datetime.fromtimestamp(mktime(date))
             if date >= start_date:
                 recent_papers.append(p)
-    return recent_papers   
+    return recent_papers
+
 
 def _paper_check(p):
-    '''
+    """
     takes one paper as input, check whether we keep it !
-    '''
+    """
     # check that this is a signed paper
     # (some feeds have news which are not papers, with no authors)
-    if not p.has_key('authors'):
+    if "authors" not in p:
         return False
-    
-    #title = _convtohtml(p['title'])
-    #authors = _convtohtml(_cleanhtml(p['author']))
+
+    # title = _convtohtml(p['title'])
+    # authors = _convtohtml(_cleanhtml(p['author']))
     scores = {}
     total_score = 0
     # keywords
     for cat in KEYWORDS.keys():
         scores[cat] = 0
-        fields = KEYWORDS[cat]['fields']
-        content = ' '.join([_convtohtml(_cleanhtml(p[f])) for f in fields])
-        for k in KEYWORDS[cat]['keywords']:
+        fields = KEYWORDS[cat]["fields"]
+        content = " ".join([_convtohtml(_cleanhtml(p[f])) for f in fields])
+        for k in KEYWORDS[cat]["keywords"]:
             if k.lower() in content.lower():
                 scores[cat] += 1
                 total_score += 1
     if total_score > 0:
-        p['score'] = scores
-        p['total_score'] = total_score
+        p["score"] = scores
+        p["total_score"] = total_score
         return p
-        
+
     else:
         return False
-                
+
+
 def paper_harvester():
-    '''
+    """
     main routine for paper harvesting : reads rss flux, select interesting
     papers and return everything for saving.
-    '''
+    """
     global ALL_PAPERS, SELECTED_PAPERS, FEEDS, DEBUG
-    
+
     # Reload settings
     load_keywords()
     load_feeds()
-    
+
     # Reset paper collections
     ALL_PAPERS = {}
     SELECTED_PAPERS = {}
-    
+
     # Harvest
     _prdelim()
     _qprint("  Starting Harvest")
-    
+
     for cat in FEEDS.keys():
         _prdelim()
-        _qprint('>> Category : %s'%cat)
+        _qprint(">> Category : %s" % cat)
         feed_dic = FEEDS[cat]
         ALL_PAPERS[cat] = {}
         SELECTED_PAPERS[cat] = {}
-        for name, feed in feed_dic.iteritems():
+        for name, feed in feed_dic.items():
             _prsubdelim()
-            _qprint('> %s'%name)
+            _qprint("> %s" % name)
             feed_papers = get_papers_from_rss(feed)
             selection = []
             for paper in feed_papers:
                 selected = _paper_check(paper)
                 if selected:
                     selection.append(selected)
-                    
+
             ALL_PAPERS[cat][name] = feed_papers
             SELECTED_PAPERS[cat][name] = selection
             Npapers = len(feed_papers)
             Nselected = len(selection)
-            _qprint('- Selected papers : %i of %i'%(Nselected, Npapers))
-            
-    
-### Generating HTML outputs
+            _qprint("- Selected papers : %i of %i" % (Nselected, Npapers))
+
+
+# -- Generating HTML outputs
+
 
 def generate_individual_report(category):
-    '''
+    """
     generates an individual report for one feed category
     category : string, key for the selected category
-    '''
-    global FEEDS, SETTINGS, INDIV_REPORT_FOLDER, ALL_PAPERS, SELECTED_PAPERS, \
-           DATE_FMT, TEST_RUN
-    
-    #-- Get feed options and papers
+    """
+    global FEEDS, SETTINGS, INDIV_REPORT_FOLDER, ALL_PAPERS, SELECTED_PAPERS, DATE_FMT, TEST_RUN
+
+    # -- Get feed options and papers
     feed = FEEDS[category]
     selection = SELECTED_PAPERS[category]
     papers = ALL_PAPERS[category]
-    
-    #-- Configuration
-    out_path_root = SETTINGS['output']['out_directory']
+
+    # -- Configuration
+    out_path_root = SETTINGS["output"]["out_directory"]
     out_path = os.path.join(out_path_root, INDIV_REPORT_FOLDER)
-    date_str =  datetime.strftime(datetime.now(),DATE_FMT)
+    date_str = datetime.strftime(datetime.now(), DATE_FMT)
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     date_header = datetime.now().strftime("%d-%m-%Y")
-    
-    #-- Generate output
+
+    # -- Generate output
     # header
-    output = html.cat_header%(category, date_header)
-    
+    output = html.cat_header % (category, date_header)
+
     # generate summary
-    output += '<h2> summary </h2> \n'
-    output += 'RSS flux read on %s <br/>'%now_str
-    output += '<ul> \n'
+    output += "<h2> summary </h2> \n"
+    output += "RSS flux read on %s <br/>" % now_str
+    output += "<ul> \n"
     for name in feed:
         Nsel = len(selection[name])
         Ntot = len(papers[name])
-        feed_url = feed[name]['url']
+        feed_url = feed[name]["url"]
         if Nsel > 0:
-            output += '<b>%s</b>'%html.summary%(feed_url, name, Nsel, Ntot)
+            output += "<b>%s</b>" % html.summary % (feed_url, name, Nsel, Ntot)
         else:
-            output += html.summary%(feed_url, name, Nsel, Ntot)
-        
-    output += '</ul> \n'
-    
+            output += html.summary % (feed_url, name, Nsel, Ntot)
+
+    output += "</ul> \n"
+
     # generate article list (SELECTION)
-    for name, settings in feed.iteritems():
+    for name, settings in feed.items():
         paper_list = selection[name]
         if len(paper_list) > 0:
-            output += html.cat_feedname%settings['display_name']
+            output += html.cat_feedname % settings["display_name"]
             for p in paper_list:
-                title = _cleantitle(_convtohtml(p['title']))
-                authors = _convtohtml(p['author'])
-                score = p['total_score']
-                kw_str = ''
-                for k, s in p['score'].iteritems():
+                title = _cleantitle(_convtohtml(p["title"]))
+                authors = _convtohtml(p["author"])
+                score = p["total_score"]
+                kw_str = ""
+                for k, s in p["score"].items():
                     if s > 0:
-                        kw_str += k + ', '
-                url = p['link']
+                        kw_str += k + ", "
+                url = p["link"]
                 try:
-                    date = p['updated_parsed']
+                    date = p["updated_parsed"]
                     date = datetime.fromtimestamp(mktime(date))
-                    date = datetime.strftime(date, '%d/%m/%Y')
+                    date = datetime.strftime(date, "%d/%m/%Y")
                 except:
-                    date = 'unknown'
-                
-                new_entry = html.selected_entry%(url,title, authors,date, score, 
-                                                 kw_str)
+                    date = "unknown"
+
+                new_entry = html.selected_entry % (
+                    url,
+                    title,
+                    authors,
+                    date,
+                    score,
+                    kw_str,
+                )
                 output += new_entry
             output += html.cat_feedfooter
-    
-    
+
     # generate article list (for fully saved categories)
-    output += '<hr/> \n <h2> Comprehensive list </h2>'
-    for name, settings in feed.iteritems():
-        if settings['save_all']:
-            output += '<h3>%s</h3> \n <ul> \n'%settings['display_name']
+    output += "<hr/> \n <h2> Comprehensive list </h2>"
+    for name, settings in feed.items():
+        if settings["save_all"]:
+            output += "<h3>%s</h3> \n <ul> \n" % settings["display_name"]
             paper_list = papers[name]
             for p in paper_list:
-                    title = _cleantitle(p['title'])
-                    authors = p['author']
-                    url = p['link']
-                    output += html.small_entry%(url, title, authors)
-            output += '</ul> \n'
-        
-    
+                title = _cleantitle(p["title"])
+                authors = p["author"]
+                url = p["link"]
+                output += html.small_entry % (url, title, authors)
+            output += "</ul> \n"
+
     output += html.cat_footer
-    
-    #-- Generate file
+
+    # -- Generate file
     if TEST_RUN:
-        fname = date_str+'_test'+'_%s.html'%category 
+        fname = date_str + "_test" + "_%s.html" % category
     else:
-        fname = date_str+'_%s.html'%category 
-    
+        fname = date_str + "_%s.html" % category
+
     fpath = os.path.join(out_path, fname)
-    
-    with open(fpath,'w') as f:
+
+    with open(fpath, "w") as f:
         f.write(output)
-    
+
     return fpath, fname
 
+
 def generate_html_output():
-    '''
+    """
     generates an html summary with links to individual reports
     as well as all individual reports
-    '''
-    global FEEDS, SETTINGS, INDIV_REPORT_FOLDER, ALL_PAPERS, SELECTED_PAPERS, \
-           DATE_FMT, TEST_RUN
-    
-    #-- Configuration
-    out_path_root = SETTINGS['output']['out_directory']
-    out_path_indiv = os.path.join('.',INDIV_REPORT_FOLDER)
-    
-    date_str =  datetime.strftime(datetime.now(),DATE_FMT)
+    """
+    global FEEDS, SETTINGS, INDIV_REPORT_FOLDER, ALL_PAPERS, SELECTED_PAPERS, DATE_FMT, TEST_RUN
+
+    # -- Configuration
+    out_path_root = SETTINGS["output"]["out_directory"]
+    out_path_indiv = os.path.join(".", INDIV_REPORT_FOLDER)
+
+    date_str = datetime.strftime(datetime.now(), DATE_FMT)
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     date_header = datetime.now().strftime("%d-%m-%Y")
-    
-    #-- Generate output
+
+    # -- Generate output
     # header
     _prdelim()
-    _qprint('Generating files')
-    output = html.main_header%(date_header)
-    output += 'RSS flux read on %s <br/>'%now_str
-    
+    _qprint("Generating files")
+    output = html.main_header % (date_header)
+    output += "RSS flux read on %s <br/>" % now_str
+
     # category reports and summary
     for category in FEEDS_ORDER:
         # generate the report
-        _qprint('>> %s'%category)
+        _qprint(">> %s" % category)
         _, fname = generate_individual_report(category)
         url = os.path.join(out_path_indiv, fname)
         # Get feed options and papers
         feed = FEEDS[category]
         selection = SELECTED_PAPERS[category]
         papers = ALL_PAPERS[category]
-        output += html.main_feedname%(url, category)
-        output_buffer = ''
+        output += html.main_feedname % (url, category)
+        output_buffer = ""
         Nsel_tot = 0
         Ntot_tot = 0
         for name in feed:
             Nsel = len(selection[name])
             Ntot = len(papers[name])
-            feed_url = feed[name]['url']
+            feed_url = feed[name]["url"]
             Nsel_tot += Nsel
             Ntot_tot += Ntot
             if Nsel > 0:
-                output_buffer += '<b>%s</b>'%html.summary%(feed_url, name, Nsel, Ntot)
+                output_buffer += (
+                    "<b>%s</b>" % html.summary % (feed_url, name, Nsel, Ntot)
+                )
             else:
-                output_buffer += html.summary%(feed_url, name, Nsel, Ntot)
-        
-        output += "Selection : %i papers out of %i \n <ul>"%(Nsel_tot, Ntot_tot)
+                output_buffer += html.summary % (feed_url, name, Nsel, Ntot)
+
+        output += "Selection : %i papers out of %i \n <ul>" % (
+            Nsel_tot,
+            Ntot_tot,
+        )
         output += output_buffer
         output += html.main_feedfooter
-    
+
     output += html.cat_footer
-    
-    #-- Generate file
+
+    # -- Generate file
     if TEST_RUN:
-        fname = date_str+'_test'+".html"
+        fname = date_str + "_test" + ".html"
     else:
-        fname = date_str+".html"
+        fname = date_str + ".html"
     fpath = os.path.join(out_path_root, fname)
-    
-    with open(fpath,'w') as f:
+
+    with open(fpath, "w") as f:
         f.write(output)
-    
+
     return fpath
-        
-        
-    
-#%% Main
+
+
+# %% Main
+
 
 def main():
 
@@ -416,23 +439,22 @@ def main():
     load_feeds()
     load_keywords()
     load_settings()
-    
+
     # Harvest papers
     paper_harvester()
-    
+
     # Generate files
     fpath = generate_html_output()
-    
+
     # try to open in browser
     try:
         webbrowser.open_new_tab(fpath)
     except:
         pass
-    
+
     return
-    
-    
+
+
 #%% Execute
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
-    

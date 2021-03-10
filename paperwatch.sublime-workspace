@@ -1,0 +1,672 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"doi",
+				"doi_svg_filepath\tstr ⟠"
+			],
+			[
+				"zoter",
+				"zoteroItem\tstatement"
+			],
+			[
+				"full",
+				"fulltext"
+			],
+			[
+				"in",
+				"index\tstatement"
+			],
+			[
+				"gno",
+				"gnotero_database\tstatement"
+			],
+			[
+				"num",
+				"numpy\tmodule"
+			],
+			[
+				"plot_ve",
+				"plot_vector_phicut\tfunction"
+			],
+			[
+				"plot",
+				"plot_vector_contour_comp\tfunction"
+			],
+			[
+				"raw",
+				"raw_input\tfunction"
+			],
+			[
+				"g",
+				"groups\tfunction"
+			],
+			[
+				"group",
+				"groups\tfunction"
+			],
+			[
+				"s",
+				"search\tfunction"
+			],
+			[
+				"fig_tex",
+				"fig_texts"
+			],
+			[
+				"False",
+				"False"
+			],
+			[
+				"fig",
+				"fig_count"
+			],
+			[
+				"back",
+				"backupName"
+			],
+			[
+				"progD",
+				"progDir"
+			],
+			[
+				"Pro",
+				"progName"
+			],
+			[
+				"ba",
+				"backupDir"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Anaconda Python Builder",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/Conda/Conda.sublime-build",
+					""
+				],
+				[
+					"Packages/Virtualenv/Python + Virtualenv.sublime-build",
+					""
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/ipython.sublime-build",
+					""
+				],
+				[
+					"Packages/User/Python-REPL.sublime-build",
+					""
+				],
+				[
+					"Packages/User/python3.sublime-build",
+					""
+				]
+			],
+			[
+				"Anaconda Python Builder",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Anaconda Python Builder",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/ipython.sublime-build",
+					""
+				],
+				[
+					"Packages/User/Python-REPL.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/ipython.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/ipython.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/bash.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/bash.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 390.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"ori de",
+				"Origami: Destroy Current Pane"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"open pack",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"build p3",
+				"Build With: python3"
+			],
+			[
+				"bui",
+				"Build With: python3"
+			],
+			[
+				"ori righ",
+				"Origami: Create Pane on the Right"
+			],
+			[
+				"anac dis",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"i",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"ip",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"rep",
+				"SublimeREPL: Python"
+			],
+			[
+				"repl",
+				"SublimeREPL: Python"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings"
+			],
+			[
+				"outline",
+				"Browse Mode: Outline (Right)"
+			],
+			[
+				"pcin",
+				"Package Control: Install Package"
+			],
+			[
+				"ui",
+				"UI: Select Color Scheme"
+			],
+			[
+				"color",
+				"Color Scheme Editor: Edit current color scheme"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"pc brow",
+				"Preferences: Browse Packages"
+			],
+			[
+				"prv",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package re",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"instl",
+				"Package Control: Install Package"
+			],
+			[
+				"colorsch",
+				"UI: Select Color Scheme"
+			],
+			[
+				"settings",
+				"Preferences: Settings"
+			],
+			[
+				"theme",
+				"UI: Select Theme"
+			],
+			[
+				"the",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"repl py",
+				"SublimeREPL: Python"
+			],
+			[
+				"build",
+				"Build With: Python"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"ipython",
+				"Open IPython Notebook"
+			],
+			[
+				"ali",
+				"Preferences: Alignment File Settings – User"
+			],
+			[
+				"lint",
+				"Anaconda: Enable linting on this file"
+			],
+			[
+				"ana",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"fold",
+				"Code Folding: Fold Tag Attributes"
+			],
+			[
+				"fold all",
+				"Code Folding: Unfold All"
+			],
+			[
+				"ipyt",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"ipytho",
+				"SublimeREPL: Python - IPython"
+			]
+		],
+		"width": 673.0
+	},
+	"console":
+	{
+		"height": 155.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/alex/Recherche/Programmation/Python/paperwatch"
+	],
+	"file_history":
+	[
+		"/home/alex/Recherche/!Articles/2021_k-mk-correlations/figures/voxels_numpy_logo.py",
+		"/home/alex/Recherche/!Articles/2020_Location-Mott-transition/versions/v12 - arxiv/HerceMott2021_antidote.tex",
+		"/home/alex/Recherche/Programmation/Pelican/tmp/Makefile",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-bootstrap3/README.md",
+		"/home/alex/Recherche/Programmation/Pelican/test-bootstrap/content/pages/index.rst",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-bootstrap3/templates/base.html",
+		"/home/alex/Recherche/Programmation/Pelican/test-bootstrap/pelicanconf.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/pelicanconf.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/images/!BADGES.txt",
+		"/home/alex/.config/sublime-text-3/Packages/User/python3.sublime-build",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-bootstrap3/templates/includes/footer.html",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-bootstrap3/templates/includes/sidebar.html",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/index.rst",
+		"/home/alex/Recherche/Programmation/Pelican/definitelynotmyidea/templates/twitter.html",
+		"/home/alex/Recherche/Programmation/Pelican/definitelynotmyidea/static/css/main.css",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/image_sources/make_badges.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/publications.rst",
+		"/home/alex/Recherche/ATI-Wien/Articles/2019_5D-Lifetime-Measurement/communication/lifetimes_summary_twitter.py",
+		"/home/alex/Recherche/ATI-Wien/Articles/2019_5D-Lifetime-Measurement/figures/fluorescence_decay_fit.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/README.md",
+		"/home/alex/Bureau/tmp/12.tex",
+		"/run/user/1000/gvfs/smb-share:server=oa-data.domain.iogs,share=optique%20atomique/Logiciels/Python/exemple de figure en Python/plot.py",
+		"/run/user/1000/gvfs/smb-share:server=oa-data.domain.iogs,share=optique%20atomique/Logiciels/Python/exemple de figure en Python/plotstyle.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/image_sources/test.py",
+		"/home/alex/.config/sublime-text-3/Packages/Python/Python.sublime-build",
+		"/home/alex/.cache/.fr-gjPlFI/Atommirror_combined.tex",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-plugins/render_math/requirements.txt",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/talks.rst",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/about-me.rst",
+		"/home/alex/Bureau/Python Examples/wx2184_Tabor_example_1.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/extra/robots.txt",
+		"/home/alex/Recherche/Programmation/Pelican/test/content/pages/article-one.rst",
+		"/home/alex/Recherche/Programmation/Pelican/test/content/pages/article-two.rst",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/publishconf.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/test.rst",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/write_email.py",
+		"/home/alex/Recherche/Programmation/Pelican/definitelynotmyidea/templates/base.html",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/about.md",
+		"/home/alex/Recherche/Programmation/Pelican/definitelynotmyidea/templates/banner.html",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/tmp.rst",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/publications.rst",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/templates/base.html",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/static/css/main.css",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/templates/twitter.html",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/templates/github.html",
+		"/home/alex/Programmation/Pelican/adphys.eu/publishconf.py",
+		"/home/alex/Programmation/Pelican/adphys.eu.old/pelicanconf.py",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/templates/banner.html",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/index.rst",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/test.rst",
+		"/home/alex/Programmation/Pelican/themes/bottle-theme-AD/templates/base.html",
+		"/home/alex/Postdoc/Institut-Optique/Software/Séquenceur/sequenceur_20181108/@seq/seqname.m",
+		"/home/alex/Postdoc/Institut-Optique/Software/Séquenceur/sequenceur_20181108/@seq/seq.m",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/about.md",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/apropos.md",
+		"/home/alex/Postdoc/Institut-Optique/Software/Séquenceur/sequenceur_20181108/gus/gus.m",
+		"/home/alex/Postdoc/Institut-Optique/Software/Visionneuse sequence/MOT.m",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/qnotero.py",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/qnoteroItemDelegate.py",
+		"/home/alex/Programmation/Python/qnotero/libzotero/libzotero.py",
+		"/home/alex/Programmation/Python/qnotero/.gitignore",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/config.py",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/listener.py",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/qnoteroItem.py",
+		"/home/alex/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/qnoteroQuery.py",
+		"/home/alex/Programmation/Python/qnotero/qnotero",
+		"/home/alex/Postdoc/ATI-Wien/Python/nanofiber/nanofiber_trap_analyser.py",
+		"/home/alex/Postdoc/ATI-Wien/Python/nanofiber/nanofiber_trap.sublime-project",
+		"/home/alex/Bureau/tmp/fibre_backup.log",
+		"/home/alex/.jupyter/custom/custom.js",
+		"/home/alex/Postdoc/ATI-Wien/Python/cc_pythonlibs/nanofiber/trap_analyzer.py",
+		"/home/alex/.config/sublime-text-3/Packages/User/Alex_OneHalfLight.tmTheme",
+		"/home/alex/Postdoc/ATI-Wien/Python/nanofiber/test.py",
+		"/home/alex/.config/sublime-text-3/Packages/Colorsublime - Themes/cache/Colorsublime-Themes-master/themes/Active4D.tmTheme",
+		"/home/alex/.config/sublime-text-3/Packages/Colorsublime - Themes/cache/Colorsublime-Themes-master/themes/AlexTheme1.tmTheme",
+		"/home/alex/.config/sublime-text-3/Packages/Color Highlighter/ColorHighlighter.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/home/alex/Postdoc/ATI-Wien/Python/nanofiber/test_2.py",
+		"/home/alex/.config/sublime-text-3/Packages/User/python_interactive.sublime-build",
+		"/home/alex/.config/sublime-text-3/Packages/User/SublimeREPL.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/User/ipython.sublime-build",
+		"/home/alex/Postdoc/ATI-Wien/Python/USC_nanofiber/spectrum_operators.py",
+		"/home/alex/Postdoc/ATI-Wien/Python/USC_nanofiber/spectrum_solve.py",
+		"/home/alex/Postdoc/ATI-Wien/Python/jupyter/surface/hybrid_trap_FC.ipynb",
+		"/home/alex/.config/sublime-text-3/Packages/IPython Notebook/README.md",
+		"/home/alex/.config/sublime-text-3/Packages/IPython Notebook/Default.sublime-keymap",
+		"/home/alex/.config/sublime-text-3/Packages/User/SublimeIPythonNotebook.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/IPython Notebook/SublimeIPythonNotebook.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/User/Base File.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/Alignment/Base File.sublime-settings",
+		"/opt/aps-length/aps-length",
+		"/opt/aps-length/re_test.py",
+		"/home/alex/Programmation/Bash/confbackup.sh",
+		"/home/alex/Postdoc/ATI-Wien/Python/getpaper/getpaper",
+		"/home/alex/Postdoc/ATI-Wien/Python/tests/thread_example.py",
+		"/home/alex/.config/sublime-text-3/Packages/User/bash.sublime-build",
+		"/home/alex/Postdoc/ATI-Wien/Python/tests/path_test.py"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 114.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 42.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 265.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 301.0
+	},
+	"pinned_build_system": "",
+	"project": "paperwatch.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"spectru",
+				"USC_nanofiber/spectrum_operators.py"
+			],
+			[
+				"spectrum",
+				"USC_nanofiber/spectrum_operators.py"
+			],
+			[
+				"aps-",
+				"/opt/aps-length/aps-length"
+			],
+			[
+				"",
+				"/opt/aps-length/re_test.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 563.0,
+		"last_filter": "io",
+		"selected_items":
+		[
+			[
+				"io",
+				"~/Recherche/Institut-Optique/Théorie & Calculs/Diffraction_Bragg/IOGS_Bragg.sublime-project"
+			],
+			[
+				"",
+				"~/Recherche/ATI-Wien/Articles/2019_5D-Lifetime-Measurement/5D-lifetime.sublime-project"
+			],
+			[
+				"proje re 2020",
+				"~/Recherche/Recrutement/2020_CNRS-Nice/projet_recherche/CNRS_projet_recherche.sublime-project"
+			],
+			[
+				"5d",
+				"~/Recherche/ATI-Wien/Articles/2019_5D-Lifetime-Measurement/5D-lifetime.sublime-project"
+			]
+		],
+		"width": 428.0
+	},
+	"select_symbol":
+	{
+		"height": 440.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 440.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 245.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
