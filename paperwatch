@@ -15,6 +15,8 @@ import webbrowser
 import os
 import configparser
 import sys
+import json
+import numpy as np
 
 from datetime import datetime, timedelta
 from time import mktime
@@ -35,6 +37,7 @@ SETTINGS = {}
 
 # Save options
 INDIV_REPORT_FOLDER = "individual_reports"
+JSON_FOLDER = "json"
 DATE_FMT = "%Y_%m_%d"
 
 # Global collections
@@ -64,7 +67,7 @@ def _cleanhtml(raw_html):
 
 
 def _convtohtml(unicode_str):
-    #out = unicode_str.encode("ascii", "xmlcharrefreplace")
+    # out = unicode_str.encode("ascii", "xmlcharrefreplace")
     # TODO : remove this function !
     # useless in python3 .
     return unicode_str
@@ -260,6 +263,113 @@ def paper_harvester():
 # -- Generating HTML outputs
 
 
+def generate_special_report():
+    """
+    special selection based on score and authors
+    """
+    global SELECTED_PAPERS, INDIV_REPORT_FOLDER, SETTINGS, DATE_FMT
+    # prepare lists
+    n_high_score = 0
+    high_scores = {}
+    known_authors = []
+
+    # analyze all papers
+    for source in SELECTED_PAPERS.keys():
+        for cat in SELECTED_PAPERS[source].keys():
+            for p in SELECTED_PAPERS[source][cat]:
+                # store high scores
+                tot_score = p["total_score"]
+                if tot_score > 2:
+                    if tot_score not in high_scores:
+                        high_scores[tot_score] = []
+                    high_scores[tot_score].append(p)
+                    high_scores[tot_score][-1]['SOURCE'] = cat
+                    n_high_score += 1
+
+                # store authors
+                if p["score"]["Authors"] > 0:
+                    known_authors.append(p)
+                    known_authors[-1]['SOURCE'] = cat
+
+    n_authors = len(known_authors)
+
+    # -- Generate output
+    date_header = datetime.now().strftime("%d-%m-%Y")
+    # header
+    output = html.cat_header % ('[special]', date_header)
+    # high scores
+    for score in np.sort(list(high_scores.keys())):
+        output += html.cat_feedname % ('★' * score)
+        for p in high_scores[score]:
+            title = _cleantitle(_convtohtml(p["title"]))
+            authors = _convtohtml(p["author"])
+            score = p["total_score"]
+            kw_str = ""
+            for k, s in p["score"].items():
+                if s > 0:
+                    kw_str += k + ", "
+            kw_str += ' [%s]' % p['SOURCE']
+            url = p["link"]
+            try:
+                date = p["updated_parsed"]
+                date = datetime.fromtimestamp(mktime(date))
+                date = datetime.strftime(date, "%d/%m/%Y")
+            except:
+                date = "unknown"
+
+            new_entry = html.selected_entry % (
+                url,
+                title,
+                authors,
+                date,
+                score,
+                kw_str,
+            )
+            output += new_entry
+        output += html.cat_feedfooter
+
+    # authors
+    output += html.cat_feedname % 'authors'
+    for p in known_authors:
+        title = _cleantitle(_convtohtml(p["title"]))
+        authors = _convtohtml(p["author"])
+        score = p["total_score"]
+        kw_str = ""
+        for k, s in p["score"].items():
+            if s > 0:
+                kw_str += k + ", "
+        kw_str += ' [%s]' % p['SOURCE']
+        url = p["link"]
+        try:
+            date = p["updated_parsed"]
+            date = datetime.fromtimestamp(mktime(date))
+            date = datetime.strftime(date, "%d/%m/%Y")
+        except:
+            date = "unknown"
+
+        new_entry = html.selected_entry % (
+            url,
+            title,
+            authors,
+            date,
+            score,
+            kw_str,
+        )
+        output += new_entry
+    output += html.cat_feedfooter
+    # -- Generate file
+    out_path_root = SETTINGS["output"]["out_directory"]
+    out_path = os.path.join(out_path_root, INDIV_REPORT_FOLDER)
+    date_str = datetime.strftime(datetime.now(), DATE_FMT)
+    fname = date_str + "_special.html"
+    fpath = os.path.join(out_path, fname)
+
+    with open(fpath, "w") as f:
+        f.write(output)
+
+    return fname, n_high_score, n_authors
+
+
 def generate_individual_report(category):
     """
     generates an individual report for one feed category
@@ -381,6 +491,15 @@ def generate_html_output():
     output = html.main_header % (date_header)
     output += "RSS flux read on %s <br/>" % now_str
 
+    # special cat
+    fname, n_high_score, n_authors = generate_special_report()
+    url = os.path.join(out_path_indiv, fname)
+    output += html.main_feedname % (url, "[special]")
+    output += "Selection : %i high scores, %i  authors\n" % (
+        n_high_score,
+        n_authors,
+    )
+
     # category reports and summary
     for category in FEEDS_ORDER:
         # generate the report
@@ -430,6 +549,27 @@ def generate_html_output():
     return fpath
 
 
+# -- SAVE JSON
+
+
+def save_as_json():
+    """
+    saves the SELECTED_PAPERS dictionnary as a json file
+    """
+    global SELECTED_PAPERS, DATE_FMT, JSON_FOLDER, SETTINGS
+
+    # generate file path and name
+    out_path_root = SETTINGS["output"]["out_directory"]
+    json_path = os.path.join(out_path_root, JSON_FOLDER)
+    date_str = datetime.strftime(datetime.now(), DATE_FMT)
+    fpath = os.path.join(json_path, "%s.json" % date_str)
+
+    # write json
+    json_data = json.dumps(SELECTED_PAPERS)
+    with open(fpath, "w+") as json_file:
+        json_file.write(json_data)
+
+
 # %% Main
 
 
@@ -445,6 +585,9 @@ def main():
 
     # Generate files
     fpath = generate_html_output()
+
+    # Save as json
+    save_as_json()
 
     # try to open in browser
     try:
