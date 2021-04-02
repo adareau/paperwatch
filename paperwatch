@@ -279,7 +279,7 @@ def generate_special_report():
             for p in SELECTED_PAPERS[source][cat]:
                 # store high scores
                 tot_score = p["total_score"]
-                if tot_score > 2:
+                if tot_score > 1:
                     if tot_score not in high_scores:
                         high_scores[tot_score] = []
                     high_scores[tot_score].append(p)
