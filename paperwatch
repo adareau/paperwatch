@@ -246,18 +246,24 @@ def paper_harvester():
         for name, feed in feed_dic.items():
             _prsubdelim()
             _qprint("> %s" % name)
-            feed_papers = get_papers_from_rss(feed)
-            selection = []
-            for paper in feed_papers:
-                selected = _paper_check(paper)
-                if selected:
-                    selection.append(selected)
+            try:
+                feed_papers = get_papers_from_rss(feed)
+                selection = []
+                for paper in feed_papers:
+                    selected = _paper_check(paper)
+                    if selected:
+                        selection.append(selected)
 
-            ALL_PAPERS[cat][name] = feed_papers
-            SELECTED_PAPERS[cat][name] = selection
-            Npapers = len(feed_papers)
-            Nselected = len(selection)
-            _qprint("- Selected papers : %i of %i" % (Nselected, Npapers))
+                ALL_PAPERS[cat][name] = feed_papers
+                SELECTED_PAPERS[cat][name] = selection
+                Npapers = len(feed_papers)
+                Nselected = len(selection)
+                _qprint("- Selected papers : %i of %i" % (Nselected, Npapers))
+            except Exception as e:
+                print("An error occured, let's go on...")
+                print(e)
+                ALL_PAPERS[cat][name] = []
+                SELECTED_PAPERS[cat][name] = []
 
 
 # -- Generating HTML outputs
@@ -283,23 +289,23 @@ def generate_special_report():
                     if tot_score not in high_scores:
                         high_scores[tot_score] = []
                     high_scores[tot_score].append(p)
-                    high_scores[tot_score][-1]['SOURCE'] = cat
+                    high_scores[tot_score][-1]["SOURCE"] = cat
                     n_high_score += 1
 
                 # store authors
                 if p["score"]["Authors"] > 0:
                     known_authors.append(p)
-                    known_authors[-1]['SOURCE'] = cat
+                    known_authors[-1]["SOURCE"] = cat
 
     n_authors = len(known_authors)
 
     # -- Generate output
     date_header = datetime.now().strftime("%d-%m-%Y")
     # header
-    output = html.cat_header % ('[special]', date_header)
+    output = html.cat_header % ("[special]", date_header)
     # high scores
     for score in np.sort(list(high_scores.keys())):
-        output += html.cat_feedname % ('★' * score)
+        output += html.cat_feedname % ("★" * score)
         for p in high_scores[score]:
             title = _cleantitle(_convtohtml(p["title"]))
             authors = _convtohtml(p["author"])
@@ -308,7 +314,7 @@ def generate_special_report():
             for k, s in p["score"].items():
                 if s > 0:
                     kw_str += k + ", "
-            kw_str += ' [%s]' % p['SOURCE']
+            kw_str += " [%s]" % p["SOURCE"]
             url = p["link"]
             try:
                 date = p["updated_parsed"]
@@ -329,7 +335,7 @@ def generate_special_report():
         output += html.cat_feedfooter
 
     # authors
-    output += html.cat_feedname % 'authors'
+    output += html.cat_feedname % "authors"
     for p in known_authors:
         title = _cleantitle(_convtohtml(p["title"]))
         authors = _convtohtml(p["author"])
@@ -338,7 +344,7 @@ def generate_special_report():
         for k, s in p["score"].items():
             if s > 0:
                 kw_str += k + ", "
-        kw_str += ' [%s]' % p['SOURCE']
+        kw_str += " [%s]" % p["SOURCE"]
         url = p["link"]
         try:
             date = p["updated_parsed"]
