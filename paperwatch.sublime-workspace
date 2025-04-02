@@ -1,0 +1,1101 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"doi",
+				"doi_svg_filepath\tstr ⟠"
+			],
+			[
+				"zoter",
+				"zoteroItem\tstatement"
+			],
+			[
+				"full",
+				"fulltext"
+			],
+			[
+				"in",
+				"index\tstatement"
+			],
+			[
+				"gno",
+				"gnotero_database\tstatement"
+			],
+			[
+				"num",
+				"numpy\tmodule"
+			],
+			[
+				"plot_ve",
+				"plot_vector_phicut\tfunction"
+			],
+			[
+				"plot",
+				"plot_vector_contour_comp\tfunction"
+			],
+			[
+				"raw",
+				"raw_input\tfunction"
+			],
+			[
+				"g",
+				"groups\tfunction"
+			],
+			[
+				"group",
+				"groups\tfunction"
+			],
+			[
+				"s",
+				"search\tfunction"
+			],
+			[
+				"fig_tex",
+				"fig_texts"
+			],
+			[
+				"False",
+				"False"
+			],
+			[
+				"fig",
+				"fig_count"
+			],
+			[
+				"back",
+				"backupName"
+			],
+			[
+				"progD",
+				"progDir"
+			],
+			[
+				"Pro",
+				"progName"
+			],
+			[
+				"ba",
+				"backupDir"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "paperwatch",
+			"settings":
+			{
+				"buffer_size": 12198,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/settings.conf",
+			"settings":
+			{
+				"buffer_size": 88,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/keywords.conf",
+			"settings":
+			{
+				"buffer_size": 1680,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Conda/Conda.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Anaconda Python Builder",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/Conda/Conda.sublime-build",
+					""
+				],
+				[
+					"Packages/Virtualenv/Python + Virtualenv.sublime-build",
+					""
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/ipython.sublime-build",
+					""
+				],
+				[
+					"Packages/User/Python-REPL.sublime-build",
+					""
+				],
+				[
+					"Packages/User/python3.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Conda/Conda.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Anaconda Python Builder",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/ipython.sublime-build",
+					""
+				],
+				[
+					"Packages/User/Python-REPL.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/ipython.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/ipython.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				],
+				[
+					"Packages/User/bash.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/User/bash.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 390.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"black",
+				"Sublack: Format file"
+			],
+			[
+				"ana env",
+				"Conda: Activate Environment"
+			],
+			[
+				"ori de",
+				"Origami: Destroy Current Pane"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"open pack",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"build p3",
+				"Build With: python3"
+			],
+			[
+				"bui",
+				"Build With: python3"
+			],
+			[
+				"ori righ",
+				"Origami: Create Pane on the Right"
+			],
+			[
+				"anac dis",
+				"Anaconda: Disable linting on this file"
+			],
+			[
+				"i",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"ip",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"rep",
+				"SublimeREPL: Python"
+			],
+			[
+				"repl",
+				"SublimeREPL: Python"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings"
+			],
+			[
+				"outline",
+				"Browse Mode: Outline (Right)"
+			],
+			[
+				"pcin",
+				"Package Control: Install Package"
+			],
+			[
+				"ui",
+				"UI: Select Color Scheme"
+			],
+			[
+				"color",
+				"Color Scheme Editor: Edit current color scheme"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"pc brow",
+				"Preferences: Browse Packages"
+			],
+			[
+				"prv",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package re",
+				"PackageResourceViewer: Open Resource"
+			],
+			[
+				"instl",
+				"Package Control: Install Package"
+			],
+			[
+				"colorsch",
+				"UI: Select Color Scheme"
+			],
+			[
+				"settings",
+				"Preferences: Settings"
+			],
+			[
+				"theme",
+				"UI: Select Theme"
+			],
+			[
+				"the",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"repl py",
+				"SublimeREPL: Python"
+			],
+			[
+				"build",
+				"Build With: Python"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"ipython",
+				"Open IPython Notebook"
+			],
+			[
+				"ali",
+				"Preferences: Alignment File Settings – User"
+			],
+			[
+				"lint",
+				"Anaconda: Enable linting on this file"
+			],
+			[
+				"ana",
+				"Anaconda: Autoformat PEP8 Errors"
+			],
+			[
+				"fold",
+				"Code Folding: Fold Tag Attributes"
+			],
+			[
+				"fold all",
+				"Code Folding: Unfold All"
+			],
+			[
+				"ipyt",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"ipytho",
+				"SublimeREPL: Python - IPython"
+			]
+		],
+		"width": 673.0
+	},
+	"console":
+	{
+		"height": 155.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/alex/Recherche/Programmation/Python/paperwatch",
+		"/home/alex/Recherche/Programmation/Python/paperwatch/config",
+		"/home/alex/Recherche/Programmation/Python/paperwatch/html_out"
+	],
+	"file_history":
+	[
+		"/home/alex/Recherche/!Articles/2021_k-mk-correlations/figures/voxels_numpy_logo.py",
+		"/home/alex/Recherche/!Articles/2020_Location-Mott-transition/versions/v12 - arxiv/HerceMott2021_antidote.tex",
+		"/home/alex/Recherche/Programmation/Pelican/tmp/Makefile",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-bootstrap3/README.md",
+		"/home/alex/Recherche/Programmation/Pelican/test-bootstrap/content/pages/index.rst",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-bootstrap3/templates/base.html",
+		"/home/alex/Recherche/Programmation/Pelican/test-bootstrap/pelicanconf.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/pelicanconf.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/images/!BADGES.txt",
+		"/home/alex/.config/sublime-text-3/Packages/User/python3.sublime-build",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-bootstrap3/templates/includes/footer.html",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-bootstrap3/templates/includes/sidebar.html",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/index.rst",
+		"/home/alex/Recherche/Programmation/Pelican/definitelynotmyidea/templates/twitter.html",
+		"/home/alex/Recherche/Programmation/Pelican/definitelynotmyidea/static/css/main.css",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/image_sources/make_badges.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/publications.rst",
+		"/home/alex/Recherche/ATI-Wien/Articles/2019_5D-Lifetime-Measurement/communication/lifetimes_summary_twitter.py",
+		"/home/alex/Recherche/ATI-Wien/Articles/2019_5D-Lifetime-Measurement/figures/fluorescence_decay_fit.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/README.md",
+		"/home/alex/Bureau/tmp/12.tex",
+		"/run/user/1000/gvfs/smb-share:server=oa-data.domain.iogs,share=optique%20atomique/Logiciels/Python/exemple de figure en Python/plot.py",
+		"/run/user/1000/gvfs/smb-share:server=oa-data.domain.iogs,share=optique%20atomique/Logiciels/Python/exemple de figure en Python/plotstyle.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/image_sources/test.py",
+		"/home/alex/.config/sublime-text-3/Packages/Python/Python.sublime-build",
+		"/home/alex/.cache/.fr-gjPlFI/Atommirror_combined.tex",
+		"/home/alex/Recherche/Programmation/Pelican/pelican-plugins/render_math/requirements.txt",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/talks.rst",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/about-me.rst",
+		"/home/alex/Bureau/Python Examples/wx2184_Tabor_example_1.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/extra/robots.txt",
+		"/home/alex/Recherche/Programmation/Pelican/test/content/pages/article-one.rst",
+		"/home/alex/Recherche/Programmation/Pelican/test/content/pages/article-two.rst",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/publishconf.py",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/test.rst",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/write_email.py",
+		"/home/alex/Recherche/Programmation/Pelican/definitelynotmyidea/templates/base.html",
+		"/home/alex/Recherche/Programmation/Pelican/adphys.eu/content/pages/about.md",
+		"/home/alex/Recherche/Programmation/Pelican/definitelynotmyidea/templates/banner.html",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/tmp.rst",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/publications.rst",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/templates/base.html",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/static/css/main.css",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/templates/twitter.html",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/templates/github.html",
+		"/home/alex/Programmation/Pelican/adphys.eu/publishconf.py",
+		"/home/alex/Programmation/Pelican/adphys.eu.old/pelicanconf.py",
+		"/home/alex/Programmation/Pelican/themes/notmyidea-AD/templates/banner.html",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/index.rst",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/test.rst",
+		"/home/alex/Programmation/Pelican/themes/bottle-theme-AD/templates/base.html",
+		"/home/alex/Postdoc/Institut-Optique/Software/Séquenceur/sequenceur_20181108/@seq/seqname.m",
+		"/home/alex/Postdoc/Institut-Optique/Software/Séquenceur/sequenceur_20181108/@seq/seq.m",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/about.md",
+		"/home/alex/Programmation/Pelican/adphys.eu/content/pages/apropos.md",
+		"/home/alex/Postdoc/Institut-Optique/Software/Séquenceur/sequenceur_20181108/gus/gus.m",
+		"/home/alex/Postdoc/Institut-Optique/Software/Visionneuse sequence/MOT.m",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/qnotero.py",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/qnoteroItemDelegate.py",
+		"/home/alex/Programmation/Python/qnotero/libzotero/libzotero.py",
+		"/home/alex/Programmation/Python/qnotero/.gitignore",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/config.py",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/listener.py",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/qnoteroItem.py",
+		"/home/alex/.config/sublime-text-3/Packages/User/Anaconda.sublime-settings",
+		"/home/alex/Programmation/Python/qnotero/libqnotero/qnoteroQuery.py",
+		"/home/alex/Programmation/Python/qnotero/qnotero",
+		"/home/alex/Postdoc/ATI-Wien/Python/nanofiber/nanofiber_trap_analyser.py",
+		"/home/alex/Postdoc/ATI-Wien/Python/nanofiber/nanofiber_trap.sublime-project",
+		"/home/alex/Bureau/tmp/fibre_backup.log",
+		"/home/alex/.jupyter/custom/custom.js",
+		"/home/alex/Postdoc/ATI-Wien/Python/cc_pythonlibs/nanofiber/trap_analyzer.py",
+		"/home/alex/.config/sublime-text-3/Packages/User/Alex_OneHalfLight.tmTheme",
+		"/home/alex/Postdoc/ATI-Wien/Python/nanofiber/test.py",
+		"/home/alex/.config/sublime-text-3/Packages/Colorsublime - Themes/cache/Colorsublime-Themes-master/themes/Active4D.tmTheme",
+		"/home/alex/.config/sublime-text-3/Packages/Colorsublime - Themes/cache/Colorsublime-Themes-master/themes/AlexTheme1.tmTheme",
+		"/home/alex/.config/sublime-text-3/Packages/Color Highlighter/ColorHighlighter.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/home/alex/Postdoc/ATI-Wien/Python/nanofiber/test_2.py",
+		"/home/alex/.config/sublime-text-3/Packages/User/python_interactive.sublime-build",
+		"/home/alex/.config/sublime-text-3/Packages/User/SublimeREPL.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/User/ipython.sublime-build",
+		"/home/alex/Postdoc/ATI-Wien/Python/USC_nanofiber/spectrum_operators.py",
+		"/home/alex/Postdoc/ATI-Wien/Python/USC_nanofiber/spectrum_solve.py",
+		"/home/alex/Postdoc/ATI-Wien/Python/jupyter/surface/hybrid_trap_FC.ipynb",
+		"/home/alex/.config/sublime-text-3/Packages/IPython Notebook/README.md",
+		"/home/alex/.config/sublime-text-3/Packages/IPython Notebook/Default.sublime-keymap",
+		"/home/alex/.config/sublime-text-3/Packages/User/SublimeIPythonNotebook.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/IPython Notebook/SublimeIPythonNotebook.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/User/Base File.sublime-settings",
+		"/home/alex/.config/sublime-text-3/Packages/Alignment/Base File.sublime-settings",
+		"/opt/aps-length/aps-length",
+		"/opt/aps-length/re_test.py",
+		"/home/alex/Programmation/Bash/confbackup.sh",
+		"/home/alex/Postdoc/ATI-Wien/Python/getpaper/getpaper",
+		"/home/alex/Postdoc/ATI-Wien/Python/tests/thread_example.py",
+		"/home/alex/.config/sublime-text-3/Packages/User/bash.sublime-build",
+		"/home/alex/Postdoc/ATI-Wien/Python/tests/path_test.py"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 114.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"iteritems"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "paperwatch",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12198,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10500,
+								10500
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										10502,
+										10503
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"region.greenish"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										10496,
+										10497
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								228,
+								10,
+								24,
+								17,
+								39,
+								57,
+								3,
+								138,
+								7,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5499.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "config/settings.conf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 88,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								87,
+								87
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								228,
+								10,
+								24,
+								17,
+								39,
+								57,
+								3,
+								231,
+								199,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "config/keywords.conf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1680,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								228,
+								10,
+								24,
+								17,
+								39,
+								57,
+								3,
+								231,
+								199,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 315.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 42.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 265.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 301.0
+	},
+	"pinned_build_system": "",
+	"project": "paperwatch.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"spectru",
+				"USC_nanofiber/spectrum_operators.py"
+			],
+			[
+				"spectrum",
+				"USC_nanofiber/spectrum_operators.py"
+			],
+			[
+				"aps-",
+				"/opt/aps-length/aps-length"
+			],
+			[
+				"",
+				"/opt/aps-length/re_test.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 563.0,
+		"last_filter": "io",
+		"selected_items":
+		[
+			[
+				"io",
+				"~/Recherche/Institut-Optique/Théorie & Calculs/Diffraction_Bragg/IOGS_Bragg.sublime-project"
+			],
+			[
+				"",
+				"~/Recherche/ATI-Wien/Articles/2019_5D-Lifetime-Measurement/5D-lifetime.sublime-project"
+			],
+			[
+				"proje re 2020",
+				"~/Recherche/Recrutement/2020_CNRS-Nice/projet_recherche/CNRS_projet_recherche.sublime-project"
+			],
+			[
+				"5d",
+				"~/Recherche/ATI-Wien/Articles/2019_5D-Lifetime-Measurement/5D-lifetime.sublime-project"
+			]
+		],
+		"width": 428.0
+	},
+	"select_symbol":
+	{
+		"height": 440.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 440.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 245.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
