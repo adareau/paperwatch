@@ -9,6 +9,7 @@ Comments: paperwatch routine
 # %% Imports
 
 import urllib
+import sqlite3
 import feedparser as fp
 import re
 import webbrowser
@@ -17,6 +18,7 @@ import configparser
 import sys
 import json
 
+from pathlib import Path
 from datetime import datetime, timedelta
 from time import mktime
 
@@ -26,11 +28,8 @@ import html_style as html
 
 # Configuration
 CONF_PATH = os.path.join("..", "config", "%s.conf")
-# for server
-# CONF_PATH = "/home/lodahu/Scripts/paperwatch/config/%s.conf"
+DB_PATH = Path(".") / "db" / "paperwatch.sqlite"
 KEYWORDS = {}
-FEEDS = {}
-FEEDS_ORDER = []
 DAYS = 8
 SETTINGS = {}
 
@@ -98,6 +97,18 @@ def _prsubdelim():
     _qprint("-" * 15)
 
 
+# -- DB connection
+
+
+def connect_to_database(db_path):
+    if not db_path.exists():
+        raise FileExistsError(
+            f"Cannot find database '{db_path.resolve()}': file does not exist"
+        )
+    connexion = sqlite3.connect(db_path)
+    return connexion
+
+
 # -- Setting handling
 
 
@@ -115,25 +126,17 @@ def load_keywords():
         KEYWORDS[cat]["keywords"] = _explode_and_trim(cp.get(cat, "keywords"))
 
 
-def load_feeds():
-    global FEEDS, FEEDS_ORDER, CONF_PATH
-    # -- parse config file
-    cp = configparser.ConfigParser()
-    cp.read(CONF_PATH % "feeds")
-    # -- populate dictionnary
-    FEEDS = {}
-    for feed in cp.sections():
-        if feed == "global":
-            FEEDS_ORDER = _explode_and_trim(cp.get(feed, "cat_order"))
-        else:
-            cat = cp.get(feed, "category").strip()
-            if cat not in FEEDS:
-                FEEDS[cat] = {}
-            FEEDS[cat][feed] = {}
-            FEEDS[cat][feed]["display_name"] = cp.get(feed, "display_name")
-            FEEDS[cat][feed]["url"] = cp.get(feed, "url")
-            FEEDS[cat][feed]["save_all"] = eval(cp.get(feed, "save_all"))
-            FEEDS[cat][feed]["check_date"] = eval(cp.get(feed, "check_date"))
+def load_feeds(db_con):
+    # -- prepare sql request
+    fields = ["url", "display_name", "category", "save_all", "check_date"]
+    sql_req = f"select {",".join(fields)} from feeds;"
+    cur = db_con.cursor()
+    # -- store results in dictionnary
+    feeds = []
+    for row in cur.execute(sql_req):
+        new_feed = {k: v for k, v in zip(fields, row)}
+        feeds.append(new_feed)
+    return feeds
 
 
 def load_settings():
@@ -581,7 +584,9 @@ def save_as_json():
 def main():
 
     # load settings
-    load_feeds()
+    db_con = connect_to_database(DB_PATH)
+    feeds = load_feeds(db_con)
+
     if True:
         return
     load_keywords()
