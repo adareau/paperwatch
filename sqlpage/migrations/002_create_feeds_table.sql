@@ -8,7 +8,7 @@ CREATE TABLE feeds (
     check_date BOOLEAN DEFAULT FALSE
 );
 
--- Creates an initial user with the username `admin` and the password `admin` (hashed using sqlpage.hash_password('admin'))
+-- Populate with example
 
 INSERT OR IGNORE
 INTO feeds(

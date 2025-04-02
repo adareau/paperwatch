@@ -112,18 +112,19 @@ def connect_to_database(db_path):
 # -- Setting handling
 
 
-def load_keywords():
+def load_keywords(db_con):
     global CONF_PATH, KEYWORDS
-    # -- parse config file
-    cp = configparser.ConfigParser()
-    cp.read(CONF_PATH % "keywords")
-    # -- populate dictionnary
-    KEYWORDS = {}
-    for cat in cp.sections():
-        KEYWORDS[cat] = {}
-        KEYWORDS[cat]["display_name"] = cp.get(cat, "display_name")
-        KEYWORDS[cat]["fields"] = _explode_and_trim(cp.get(cat, "fields"))
-        KEYWORDS[cat]["keywords"] = _explode_and_trim(cp.get(cat, "keywords"))
+    # -- prepare sql request
+    fields = ["category", "short_name", "keywords"]
+    sql_req = f"select {",".join(fields)} from keywords;"
+    cur = db_con.cursor()
+    # -- store results in dictionnary
+    keywords = []
+    for row in cur.execute(sql_req):
+        new_cat = {k: v for k, v in zip(fields, row)}
+        new_cat["keywords"] = _explode_and_trim(new_cat["keywords"])
+        keywords.append(new_cat)
+    return keywords
 
 
 def load_feeds(db_con):
@@ -586,10 +587,11 @@ def main():
     # load settings
     db_con = connect_to_database(DB_PATH)
     feeds = load_feeds(db_con)
+    keywords = load_keywords(db_con)
+    print(keywords)
 
     if True:
         return
-    load_keywords()
     load_settings()
 
     # Harvest papers
