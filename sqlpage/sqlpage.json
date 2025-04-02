@@ -1,0 +1,6 @@
+{
+    "allow_exec": "true",
+    "listen_on": "localhost:8080",
+    "database_url": "sqlite://./db/sqlpage.sqlite?mode=rwc",
+    "web_root": "./www"
+}

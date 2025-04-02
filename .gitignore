@@ -2,3 +2,7 @@
 html_out
 *.conf
 test
+sandbox/*
+db/*
+*.bin
+__venv__
