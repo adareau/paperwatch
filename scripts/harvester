@@ -78,6 +78,8 @@ def _cleantitle(raw_title):
 
 
 def _explode_and_trim(str_in):
+    if str_in is None:
+        return [""]
     list_out = str_in.split(",")
     list_out = [e.strip() for e in list_out]
     return list_out
@@ -113,7 +115,6 @@ def connect_to_database(db_path):
 
 
 def load_keywords(db_con):
-    global CONF_PATH, KEYWORDS
     # -- prepare sql request
     fields = ["category", "short_name", "keywords"]
     sql_req = f"select {",".join(fields)} from keywords;"
@@ -125,6 +126,20 @@ def load_keywords(db_con):
         new_cat["keywords"] = _explode_and_trim(new_cat["keywords"])
         keywords.append(new_cat)
     return keywords
+
+
+def load_authors(db_con):
+    # -- prepare sql request
+    fields = ["name", "tags"]
+    sql_req = f"select {",".join(fields)} from authors;"
+    cur = db_con.cursor()
+    # -- store results in dictionnary
+    authors = []
+    for row in cur.execute(sql_req):
+        new_auth = {k: v for k, v in zip(fields, row)}
+        new_auth["tags"] = _explode_and_trim(new_auth["tags"])
+        authors.append(new_auth)
+    return authors
 
 
 def load_feeds(db_con):
@@ -588,7 +603,8 @@ def main():
     db_con = connect_to_database(DB_PATH)
     feeds = load_feeds(db_con)
     keywords = load_keywords(db_con)
-    print(keywords)
+    authors = load_authors(db_con)
+    print(authors)
 
     if True:
         return
