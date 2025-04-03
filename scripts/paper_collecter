@@ -7,6 +7,7 @@ collects papers from rss feeds and stores them in the database
 
 # % IMPORTS
 
+import json
 import feedparser as fp
 from pathlib import Path
 
@@ -135,6 +136,30 @@ def parse_papers(result):
     # -- store result
     result["papers"] = papers
 
+@sqlconnector(DB_PATH)
+def store_papers(db_con, collection, harvest_id):
+    """
+    Take collected papers and insert them into the database
+    """
+
+
+@sqlconnector(DB_PATH)
+def create_harvest_entry(db_con, feeds):
+    """
+    creates an entry in the harvest table
+    and returns the id
+    """
+    # -- prepare request
+    feed_info = [{k:f[k] for k in ["id", "display_name"]} for f in feeds]
+    feed_info_json = json.dumps(feed_info)
+    sql_req = f"INSERT INTO harvest (feeds) values ('{feed_info_json}');"
+    # -- insert new entry with feed info
+    db_con.execute(sql_req)
+    # -- get last entry
+    res = db_con.execute("select max(id) from harvest;")
+    last_id = res.fetchone()[0]
+    return last_id
+
 
 # % FOR DEBUGGING
 
@@ -182,22 +207,26 @@ def main():
     # -- 1 - get feeds settings
     # get information about feeds
     feeds = load_feeds()
-    # -- 2 - collect papers
+    # -- 2 - add a harvest entry
+    harvest_id = create_harvest_entry(feeds)
+    # -- 3 - collect papers
     # for each feed, collect raw entries
     if USE_FEED_EXAMPLE:
         collection = collect_papers_from_example()
     else:
         collection = collect_papers(feeds)
-    # -- 3 - parse papers
+    # -- 4 - parse papers
     # each result is modified in place
     # and a 'papers' field is added to the result dict
     for res in collection:
         parse_papers(res)
-    # -- 4 - store papers in database
+    # -- 5 - store papers in database
+    store_papers(collection, harvest_id)
+    # ----------- DEBUG --------------
     res = collection[0]
     pp = res["papers"][0]
     print([(k, v) for k, v in pp.items()])
-    # print(res["papers_raw"][0]["tags"])
+    # print(res["papers_rabw"][0]["tags"])
 
 
 # % EXECUTION
