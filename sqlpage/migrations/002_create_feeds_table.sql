@@ -9,10 +9,12 @@ CREATE TABLE feeds (
     field_title TEXT DEFAULT "title",
     field_summary TEXT DEFAULT "summary",
     field_date TEXT DEFAULT "updated_parsed",
+    field_date_type TEXT DEFAULT "timestruct",
     field_author TEXT DEFAULT "author",
     field_author_type TEXT DEFAULT "cs-list",
     field_id TEXT DEFAULT "id",
-    field_tags TEXT DEFAULT "tags"
+    field_tags TEXT DEFAULT "tags",
+    field_tags_type TEXT DEFAULT "arxiv"
 
 );
 

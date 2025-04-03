@@ -68,10 +68,72 @@ def collect_papers(feeds_list):
             print("An error occured, let's go on...")
             print(e)
             feed_papers = []
-        result["papers"] = feed_papers
+        result["papers_raw"] = feed_papers
         collection.append(result)
 
     return collection
+
+
+def _get_authors_list(value, type):
+    """
+    parse author list, depending on the type
+    """
+    implemented_types = [
+        "cs-list",
+    ]
+    assert type in implemented_types, f"implemented author types = {implemented_types}"
+    match type:
+        case "cs-list":
+            aut_list = value.split(",")
+            aut_list = [aut.strip() for aut in aut_list]
+            return aut_list
+
+
+def _get_tag_list(value, type):
+    """
+    parse tag list, depending on the type
+    """
+    implemented_types = [
+        "arxiv",
+    ]
+    assert type in implemented_types, f"implemented tag types = {implemented_types}"
+    match type:
+        case "arxiv":
+            tag_list = [t["term"] for t in value]
+            return tag_list
+
+
+def parse_papers(result):
+    """
+    takes the result for a feed as yielded by `collect_papers`
+    and convert it in a form that is ready to be stored
+    in the database
+    """
+    # -- get feed info and raw paper list
+    feed = result["feed"]
+    papers_raw = result["papers_raw"]
+
+    # -- loop on papers
+    papers = []
+    for p in papers_raw:
+        pc = {}
+        # 'easy' fields
+        for name in ["link", "title", "summary", "id"]:
+            feed_field = feed.get(f"field_{name}")
+            pc[name] = p.get(feed_field)
+        # authors
+        authors_value = p.get(feed.get("field_author"))
+        authors_type = feed.get("field_author_type")
+        pc["authors"] = _get_authors_list(authors_value, authors_type)
+        # tags
+        tags_value = p.get(feed.get("field_tags"))
+        tags_type = feed.get("field_tags_type")
+        pc["tags"] = _get_tag_list(tags_value, tags_type)
+        # append
+        papers.append(pc)
+
+    # -- store result
+    result["papers"] = papers
 
 
 # % FOR DEBUGGING
@@ -92,13 +154,22 @@ def collect_papers_from_example():
         "url": "http://mockup.feed/rss",
         "display_name": "mockup",
         "category": "debug",
+        "field_date": "published_parsed",
+        "field_title": "title",
+        "field_link": "link",
+        "field_author": "author",
+        "field_summary": "summary",
+        "field_id": "id",
+        "field_tags": "tags",
+        "field_author_type": "cs-list",
+        "field_tags_type": "arxiv",
     }
     # read
     example_feed = FEED_EXAMPLE_PATH / FEED_EXAMPLE
     with example_feed.open() as f:
         papers = get_papers_from_rss(f.read())
     # result
-    result = {"feed": feed, "papers": papers}
+    result = {"feed": feed, "papers_raw": papers}
     collection.append(result)
 
     return collection
@@ -108,16 +179,25 @@ def collect_papers_from_example():
 
 
 def main():
-    # 1 - get feeds settings
+    # -- 1 - get feeds settings
+    # get information about feeds
     feeds = load_feeds()
-    print(feeds)
-    # 2 - collect papers
+    # -- 2 - collect papers
+    # for each feed, collect raw entries
     if USE_FEED_EXAMPLE:
         collection = collect_papers_from_example()
     else:
         collection = collect_papers(feeds)
-
-    p = collection[0]["papers"][0]
+    # -- 3 - parse papers
+    # each result is modified in place
+    # and a 'papers' field is added to the result dict
+    for res in collection:
+        parse_papers(res)
+    # -- 4 - store papers in database
+    res = collection[0]
+    pp = res["papers"][0]
+    print([(k, v) for k, v in pp.items()])
+    # print(res["papers_raw"][0]["tags"])
 
 
 # % EXECUTION
