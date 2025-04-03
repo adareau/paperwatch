@@ -1,5 +1,4 @@
 CREATE TABLE keywords (
-    --- manual entries / informations
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     category TEXT NOT NULL,
     short_name TEXT NOT NULL,

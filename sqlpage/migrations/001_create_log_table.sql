@@ -1,4 +1,4 @@
-CREATE TABLE debug (
+CREATE TABLE log (
     --- manual entries / informations
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     action TEXT,
