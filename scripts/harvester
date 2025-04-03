@@ -155,16 +155,6 @@ def load_feeds(db_con):
     return feeds
 
 
-def load_settings():
-    global CONF_PATH, SETTINGS
-    # -- parse config file
-    cp = configparser.ConfigParser()
-    cp.read(CONF_PATH % "settings")
-    # -- populate dictionnary
-    SETTINGS = {}
-    SETTINGS["output"] = {"out_directory": cp.get("output", "out_directory")}
-
-
 # %% Core functions
 
 # -- Get and process papers
@@ -234,6 +224,28 @@ def _paper_check(p):
 
     else:
         return False
+
+
+def collect_papers(feeds_list):
+    """
+    reads rss flux and return a list of papers
+    """
+    # -- prepare output
+    collection = []
+
+    # -- read feeds
+    for feed in feeds_list:
+        result = {"feed": feed}
+        try:
+            feed_papers = get_papers_from_rss(feed)
+        except Exception as e:
+            print("An error occured, let's go on...")
+            print(e)
+            feed_papers = []
+        result["papers"] = feed_papers
+        collection.append(result)
+
+    return collection
 
 
 def paper_harvester():
@@ -604,16 +616,33 @@ def main():
     feeds = load_feeds(db_con)
     keywords = load_keywords(db_con)
     authors = load_authors(db_con)
-    print(authors)
+
+    # harvest papers
+    # avoid too many request
+    import pickle
+
+    dump = Path(".") / "sandbox" / "collection.pkl"
+    if False:
+        collection = collect_papers(feeds)
+        with dump.open("wb") as f:
+            pickle.dump(collection, f)
+    else:
+        with dump.open("rb") as f:
+            collection = pickle.load(f)
+
+    for res in collection:
+        print(res["feed"])
+        print(list(res["papers"][0].keys()))
+    #
+
+    # filter papers
+
+    # store papers
 
     if True:
         return
-    load_settings()
-
-    # Harvest papers
-    paper_harvester()
-
     # Generate files
+    paper_harvester()
     fpath = generate_html_output()
 
     # Save as json
