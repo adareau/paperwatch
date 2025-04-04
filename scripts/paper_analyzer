@@ -68,6 +68,122 @@ def load_authors(db_con):
 
 
 @sqlconnector(DB_PATH)
+def fetch_new_papers(db_con):
+    write_log("analysis", "fetch new papers")
+    # -- prepare sql request
+    fields = ["author", "title", "summary", "id"]
+    sql_req = f"select {",".join(fields)} from papers where analyzed=False;"
+    # -- store results
+    papers = []
+    for row in db_con.execute(sql_req):
+        new_paper = {k: v for k, v in zip(fields, row)}
+        papers.append(new_paper)
+    return papers
+
+
+def analyze_papers(papers, keywords, authors, analysis_id):
+    write_log("analysis", "analyze papers")
+    results = {}
+    for p in papers:
+        # -- get data
+        paper_aut = json.loads(p["author"])
+        title = p["title"]
+        summary = p["summary"]
+        # -- init result
+        keywords_score = 0
+        keywords_tags = set()
+        authors_score = 0
+        authors_tags = set()
+        score_detail = {}
+        followed_authors = set()
+        # -- analyze authors
+        for followed_aut in authors:
+            for aut in paper_aut:
+                if followed_aut["name"].lower() in aut.lower():
+                    authors_score += 1
+                    followed_authors.add(aut)
+                    authors_tags |= {t for t in followed_aut["tags"]}
+
+        # -- search for keywords
+        for cat in keywords:
+            name = cat["category"]
+            score_detail[name] = 0
+            for kw in cat["keywords"]:
+                if kw.lower() in summary.lower():
+                    score_detail[name] += 1
+                    keywords_score += 1
+                    keywords_tags.add(name)
+                if kw.lower() in title.lower():
+                    score_detail[name] += 1
+                    keywords_score += 1
+                    keywords_tags.add(name)
+
+        # -- total score
+        total_score = keywords_score + authors_score
+
+        # -- convert sets
+        keywords_tags = [k for k in keywords_tags]
+        authors_tags = [a for a in authors_tags]
+        followed_authors = [a for a in followed_authors]
+        # -- store results
+        res = {
+            "analysis_id": analysis_id,
+            "total_score": total_score,
+            "keywords_score": keywords_score,
+            "keywords_tags": json.dumps(keywords_tags),
+            "authors_score": authors_score,
+            "authors_tags": json.dumps(authors_tags),
+            "score_detail": json.dumps(score_detail),
+            "followed_authors": json.dumps(followed_authors),
+            "selected": total_score > 0,
+            "analyzed": True,
+        }
+
+        results[p["id"]] = res
+
+    return results
+
+
+def _insert_analysis_result(db_con, id, res):
+    # -- prepare request
+    req_pattern = "UPDATE papers SET {} where id=?;"
+    values_str = ",".join([f"{k} = ?" for k in res.keys()])
+    values = list(res.values()) + [
+        id,
+    ]
+    req = req_pattern.format(values_str)
+    # -- post
+    try:
+        db_con.execute(req, values)
+    except Exception as e:
+        print(e)
+        return 0
+    return 1
+
+@sqlconnector(DB_PATH)
+def store_results(db_con, results):
+    """
+    Store analysis result in database
+    """
+    write_log("analysis", "store papers")
+    # -- prepare counter
+    papers_analyzed = 0
+    papers_selected = 0
+
+    # -- iterate
+    for id, res in results.items():
+        if _insert_analysis_result(db_con, id, res):
+            papers_analyzed += 1
+            papers_selected += res["selected"]
+
+    # -- return result
+    res = {}
+    res["papers_analyzed"] = papers_analyzed
+    res["papers_selected"] = papers_selected
+    res["success"] = True
+    return res
+
+@sqlconnector(DB_PATH)
 def create_analysis_entry(db_con):
     """
     creates an entry in the analysis table
@@ -118,13 +234,17 @@ def main():
     # -- 1 - get keywords and authors
     keywords = load_keywords()
     authors = load_authors()
-    print(keywords)
     # -- 2 - add a analysis entry
     analysis_id = create_analysis_entry()
-    # -- 3 - collect papers
-
-    # -- 6 - write result
-    # store_analysis_results(result, analysis_id)
+    # -- 3 - fetch new papers
+    papers = fetch_new_papers()
+    # -- 4 - analyze papers
+    results = analyze_papers(papers, keywords, authors, analysis_id)
+    # -- 5 - update papers table
+    res = store_results(results)
+    # -- 6 - store result
+    store_analysis_results(res, analysis_id)
+    # -- DONE
     write_log("analysis", "--- success ---")
 
 

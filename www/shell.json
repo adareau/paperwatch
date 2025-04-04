@@ -4,6 +4,11 @@
     "link": "/",
     "menu_item": [
         {"link": "index.sql", "title": "Home"},
+        {"title": "Papers", "submenu": [
+            {"link": "/papers.selected.sql", "title": "selected"},
+            {"link": "/papers.new.sql", "title": "new"},
+            {"link": "/papers.all.sql", "title": "all"}
+        ]},
         {"title": "Log tables", "submenu": [
             {"link": "/tables.logs.sql", "title": "logs"},
             {"link": "/tables.harvests.sql", "title": "harvests"},

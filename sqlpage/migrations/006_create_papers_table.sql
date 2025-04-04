@@ -20,11 +20,13 @@ CREATE TABLE papers (
 
     --- status & score : automatic analysis
     analyzed BOOLEAN DEFAULT False,
+    analysis_id INT,
     total_score INT DEFAULT 0,
     keywords_score INT DEFAULT 0,
     authors_score INT DEFAULT 0,
-    keyword_tags TEXT,
-    author_tags TEXT,
+    keywords_tags TEXT,
+    authors_tags TEXT,
+    followed_authors TEXT,
     score_detail TEXT,
     new BOOLEAN DEFAULT True,
 

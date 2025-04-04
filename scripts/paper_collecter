@@ -196,7 +196,7 @@ def _insert_paper_in_db(db_con, p):
 
 
 @sqlconnector(DB_PATH)
-def store_papers(db_con, collection, harvest_id):
+def store_papers(db_con, collection):
     """
     Take collected papers and insert them into the database
     """
@@ -209,7 +209,6 @@ def store_papers(db_con, collection, harvest_id):
     # -- iterate
     for res in collection:
         # - get data
-        feed = res["feed"]
         papers = res["papers"]
         papers_collected += len(papers)
         # - loop on papers
@@ -330,7 +329,7 @@ def main():
     for res in collection:
         parse_papers(res, harvest_id)
     # -- 5 - store papers in database
-    result = store_papers(collection, harvest_id)
+    result = store_papers(collection)
     # -- 6 - write result
     store_harvest_results(result, harvest_id)
     write_log("harvest", "--- success ---")

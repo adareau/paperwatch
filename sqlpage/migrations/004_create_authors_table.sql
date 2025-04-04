@@ -8,8 +8,9 @@ CREATE TABLE authors (
 
 INSERT OR IGNORE
 INTO authors
-(name)
+(name, tags)
 VALUES
-('Bloch'),
-('Dalibard'),
-('Ketterle');
+('Bloch', 'cold atoms, lattices'),
+('Dalibard', 'cold atoms'),
+('Langen', 'cold atoms, molecules'),
+('Ketterle', 'cold atoms');
