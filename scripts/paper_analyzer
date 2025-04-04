@@ -1,0 +1,137 @@
+#! /usr/bin/env python3
+"""
+paper_analyzer script
+
+analyze new papers from database, and assign a score based on keywords
+"""
+
+# % IMPORTS
+
+import json
+import re
+import feedparser as fp
+from pathlib import Path
+from time import mktime
+from datetime import datetime
+
+# % LOCAL IMPORT
+
+from sql_connect import sqlconnector
+
+# % SETTINGS
+
+DIR = Path(__file__).parents[0]  # returns the script directory
+DB_PATH = DIR / ".." / "db" / "paperwatch.sqlite"
+
+
+# % FUNCTIONS
+
+
+def _explode_and_trim(str_in):
+    if str_in is None:
+        return [""]
+    list_out = str_in.split(",")
+    list_out = [e.strip() for e in list_out]
+    return list_out
+
+
+@sqlconnector(DB_PATH)
+def load_keywords(db_con):
+    write_log("analysis", "load keywords")
+    # -- prepare sql request
+    fields = ["category", "short_name", "keywords"]
+    sql_req = f"select {",".join(fields)} from keywords;"
+    cur = db_con.cursor()
+    # -- store results in dictionnary
+    keywords = []
+    for row in cur.execute(sql_req):
+        new_cat = {k: v for k, v in zip(fields, row)}
+        new_cat["keywords"] = _explode_and_trim(new_cat["keywords"])
+        keywords.append(new_cat)
+    return keywords
+
+
+@sqlconnector(DB_PATH)
+def load_authors(db_con):
+    write_log("analysis", "load authors")
+    # -- prepare sql request
+    fields = ["name", "tags"]
+    sql_req = f"select {",".join(fields)} from authors;"
+    cur = db_con.cursor()
+    # -- store results in dictionnary
+    authors = []
+    for row in cur.execute(sql_req):
+        new_auth = {k: v for k, v in zip(fields, row)}
+        new_auth["tags"] = _explode_and_trim(new_auth["tags"])
+        authors.append(new_auth)
+    return authors
+
+
+@sqlconnector(DB_PATH)
+def create_analysis_entry(db_con):
+    """
+    creates an entry in the analysis table
+    and returns the id
+    """
+    write_log("analysis", "create analysis entry")
+    # -- prepare request
+    sql_req = f"INSERT INTO analysis (success) values (false);"
+    # -- insert new entry with feed info
+    db_con.execute(sql_req)
+    # -- get last entry
+    res = db_con.execute("select max(id) from analysis;")
+    last_id = res.fetchone()[0]
+    return last_id
+
+
+@sqlconnector(DB_PATH)
+def store_analysis_results(db_con, result, analysis_id):
+    """
+    store analysis results in the analysis table
+    """
+    write_log("analysis", "store analysis result")
+    req = "UPDATE analysis SET {} WHERE id = ?;"
+    values_str = ",".join([f"{k} = ?" for k in result.keys()])
+    values = list(result.values()) + [
+        analysis_id,
+    ]
+    req = req.format(values_str)
+    db_con.execute(req, values)
+
+
+# % FOR DEBUGGING
+
+
+@sqlconnector(DB_PATH)
+def write_log(db_con, action, details="", error=False):
+    db_con.execute(
+        "INSERT INTO log(action, details, error) values(?, ?, ?)",
+        (action, details, error),
+    )
+
+
+# % MAIN ROUTINE
+
+
+def main():
+    write_log("analysis", "--- starting analysis ---")
+    # -- 1 - get keywords and authors
+    keywords = load_keywords()
+    authors = load_authors()
+    print(keywords)
+    # -- 2 - add a analysis entry
+    analysis_id = create_analysis_entry()
+    # -- 3 - collect papers
+
+    # -- 6 - write result
+    # store_analysis_results(result, analysis_id)
+    write_log("analysis", "--- success ---")
+
+
+# % EXECUTION
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        write_log("analysis", str(e), error=True)
+        raise e

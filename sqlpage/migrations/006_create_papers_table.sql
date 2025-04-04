@@ -23,6 +23,9 @@ CREATE TABLE papers (
     total_score INT DEFAULT 0,
     keywords_score INT DEFAULT 0,
     authors_score INT DEFAULT 0,
+    keyword_tags TEXT,
+    author_tags TEXT,
+    score_detail TEXT,
     new BOOLEAN DEFAULT True,
 
     --- status & score : manual review

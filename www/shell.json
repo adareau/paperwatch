@@ -1,0 +1,18 @@
+{
+    "component": "shell",
+    "title": "PAPERWATCH",
+    "link": "/",
+    "menu_item": [
+        {"link": "index.sql", "title": "Home"},
+        {"title": "Log tables", "submenu": [
+            {"link": "/tables.logs.sql", "title": "logs"},
+            {"link": "/tables.harvests.sql", "title": "harvests"},
+            {"link": "/tables.analysis.sql", "title": "analysis"}
+        ]},
+        {"title": "Parameters", "submenu": [
+            {"link": "/parameters.feeds.sql", "title": "feeds"},
+            {"link": "/parameters.keywords.sql", "title": "keywords"},
+            {"link": "/parameters.authors.sql", "title": "authors"}
+        ]}
+    ]
+}
