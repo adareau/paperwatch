@@ -5,5 +5,6 @@ CREATE TABLE harvest (
     success BOOLEAN DEFAULT FALSE,
     papers_collected INT DEFAULT 0,
     papers_collected_new INT DEFAULT 0,
+    papers_errors INT DEFAULT 0,
     log TEXT
 );
