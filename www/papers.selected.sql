@@ -25,4 +25,4 @@ select
     authors_tags,
     keywords_tags,
     format("%s", link) as "link"
-from papers where new = True and selected = True and viewed = False;
+from papers where new = True and total_score > 0 True and viewed = False;

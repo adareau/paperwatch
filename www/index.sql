@@ -4,13 +4,97 @@ SELECT
     sqlpage.run_sql('auth.sql') AS properties,
     sqlpage.read_file_as_text('shell.json') AS properties;
 
+--- ================= ACTIONS ====================
+
+-- viewed paper
+update papers set viewed=True where id=$viewed_paper_id;
+-- unview paper
+update papers set viewed=False where id=$unview_paper_id;
+-- select paper
+update papers set viewed=True, selected=True where id=$select_paper_id;
+-- unselect paper
+update papers set viewed=False, selected=False where id=$unselect_paper_id;
+
+
 --- ================= BODY ====================
 
 -- ==== CHECK PAPER STATUS
 set papers_to_analyze = select count(*) from papers where analyzed = False;
-set papers_to_review_selected = select count(*) from papers where selected = True and viewed = False;
+set papers_to_review_selected = select count(*) from papers where viewed = False and total_score > 0;
 set papers_to_review_all = select count(*) from papers where viewed = False;
 
+-- ==== DISPLAY MESSAGE BOXES
+
+-- new papers
+
+set display_new_message_alert = ($papers_to_review_selected > 0
+                                  and $viewed_paper_id is null
+                                  and $select_paper_id is null);
+select
+    'alert'                    as component,
+    format('%i newly selected papers to review.', $papers_to_review_selected) as title,
+    'analyze'                  as icon,
+    'teal'                     as color,
+    TRUE                       as dismissible
+where $display_new_message_alert;
+select
+    'papers.selected.sql'       as link,
+    'View full list' as title
+where $display_new_message_alert;
+
+-- viewed paper
+
+select
+    'alert'                    as component,
+    'Paper marked as viewed' as title,
+    'eye'                  as icon,
+    'blue'                     as color,
+    TRUE                       as dismissible
+from papers where id=$viewed_paper_id;
+select
+    'index.sql?unview_paper_id=' || id       as link,
+    'Dismiss' as title
+from papers where id=$viewed_paper_id;
+
+-- selected paper
+
+select
+    'alert'                    as component,
+    'Paper selected' as title,
+    'rosette-discount-check'                  as icon,
+    'purple'                     as color,
+    TRUE                       as dismissible
+from papers where id=$select_paper_id;
+select
+    'index.sql?unselect_paper_id=' || id       as link,
+    'Dismiss' as title
+from papers where id=$select_paper_id;
+
+-- ==== LAST SELECTED PAPERS
+
+select
+    'list'                 as component,
+    format('Freshly selected papers (%i)', $papers_to_review_selected) as title,
+    TRUE                   as wrap,
+    TRUE                   as compact
+where $papers_to_review_all > 0;
+select
+    title            as title,
+    'index.sql?select_paper_id=' || id as edit_link,
+    'index.sql?viewed_paper_id=' || id as view_link,
+    link as link,
+    author_display as description_md,
+    --'red'                       as color,
+    format('hexagon-number-%i', total_score)   as icon
+
+from papers
+where viewed=False
+and total_score > 0
+order by total_score desc
+limit 10;
+
+
+-- ==== Display stats
 
 select
     'card' as component,
@@ -40,30 +124,6 @@ select
     (select case when $papers_to_analyze > 0
           then 'alert-square-rounded'
           else 'checkbox' end) as icon;
-
-
-
--- ==== LAST SELECTED PAPERS
-
-select
-    'list'                 as component,
-    'Freshly selected papers' as title,
-    TRUE                   as wrap,
-    TRUE                   as compact;
-select
-    title            as title,
-    link as link,
-    author_display as description_md,
-    --'red'                       as color,
-    format("hexagon-number-%i", total_score)   as icon,
-    --TRUE                        as active,
-    link as view_link
-
-from papers
-where viewed=False
-and selected=True
-order by total_score desc
-limit 10;
 
 -- ==== LAST HARVEST
 

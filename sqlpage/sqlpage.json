@@ -1,6 +1,6 @@
 {
     "allow_exec": "true",
-    "listen_on": "localhost:8080",
+    "listen_on": "0.0.0.0:8080",
     "database_url": "sqlite://./db/paperwatch.sqlite?mode=rwc",
     "web_root": "./www"
 }

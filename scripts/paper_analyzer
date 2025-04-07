@@ -138,7 +138,6 @@ def analyze_papers(papers, keywords, authors, analysis_id):
             "authors_tags": json.dumps(authors_tags),
             "score_detail": json.dumps(score_detail),
             "followed_authors": json.dumps(followed_authors),
-            "selected": total_score > 0,
             "analyzed": True,
             "author_display": author_display,
         }
@@ -178,7 +177,7 @@ def store_results(db_con, results):
     for id, res in results.items():
         if _insert_analysis_result(db_con, id, res):
             papers_analyzed += 1
-            papers_selected += res["selected"]
+            papers_selected += (res["total_score"] > 0)
 
     # -- return result
     res = {}
