@@ -1,8 +1,10 @@
+--- ================= HEADER ====================
 SELECT
     'dynamic' AS component,
+    sqlpage.run_sql('auth.sql') AS properties,
     sqlpage.read_file_as_text('shell.json') AS properties;
 
-----
+--- ================= BODY ====================
 select 'title' as component, 'log : harvests' as contents;
 
 select
