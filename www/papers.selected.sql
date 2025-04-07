@@ -17,7 +17,7 @@ select
 select
     id,
     title,
-    author,
+    author_display as "authors",
     followed_authors,
     total_score,
     keywords_score,

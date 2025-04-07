@@ -155,6 +155,9 @@ def parse_papers(result, harvest_id):
         authors_value = p.get(feed.get("field_author"))
         authors_type = feed.get("field_author_type")
         pc["author"] = _get_authors_list(authors_value, authors_type)
+        # authors - display format
+        aut_list = json.loads(pc["author"])
+        pc["author_display"] = ", ".join(aut_list)
         # tags
         tags_value = p.get(feed.get("field_tags"))
         tags_type = feed.get("field_tags_type")

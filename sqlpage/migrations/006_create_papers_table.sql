@@ -13,6 +13,9 @@ CREATE TABLE papers (
     feed_tags TEXT,
     doi TEXT,
 
+    --- fields for display
+    author_display TEXT,
+
     --- feed data
     date_published DATETIME NOT NULL,
     feed_url TEXT NOT NULL,

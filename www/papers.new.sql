@@ -17,7 +17,7 @@ select
 select
     id,
     title,
-    author,
+    author_display as "authors",
     analyzed,
     selected,
     format("%s", link) as "link"

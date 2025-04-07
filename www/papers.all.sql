@@ -17,7 +17,7 @@ select
 select
     id,
     title,
-    author,
+    author_display as "authors",
     new,
     analyzed,
     selected,

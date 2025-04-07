@@ -43,9 +43,27 @@ select
 
 
 
+-- ==== LAST SELECTED PAPERS
 
+select
+    'list'                 as component,
+    'Freshly selected papers' as title,
+    TRUE                   as wrap,
+    TRUE                   as compact;
+select
+    title            as title,
+    link as link,
+    author_display as description_md,
+    --'red'                       as color,
+    format("hexagon-number-%i", total_score)   as icon,
+    --TRUE                        as active,
+    link as view_link
 
-
+from papers
+where viewed=False
+and selected=True
+order by total_score desc
+limit 10;
 
 -- ==== LAST HARVEST
 

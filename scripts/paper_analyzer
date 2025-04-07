@@ -97,13 +97,16 @@ def analyze_papers(papers, keywords, authors, analysis_id):
         score_detail = {}
         followed_authors = set()
         # -- analyze authors
-        for followed_aut in authors:
-            for aut in paper_aut:
+        author_list_formatted = []
+        for aut in paper_aut:
+            for followed_aut in authors:
                 if followed_aut["name"].lower() in aut.lower():
                     authors_score += 1
                     followed_authors.add(aut)
                     authors_tags |= {t for t in followed_aut["tags"]}
-
+                    aut = "**" + aut + "**"
+            author_list_formatted.append(aut)
+        author_display = ", ".join(author_list_formatted)
         # -- search for keywords
         for cat in keywords:
             name = cat["category"]
@@ -137,6 +140,7 @@ def analyze_papers(papers, keywords, authors, analysis_id):
             "followed_authors": json.dumps(followed_authors),
             "selected": total_score > 0,
             "analyzed": True,
+            "author_display": author_display,
         }
 
         results[p["id"]] = res
