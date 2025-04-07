@@ -6,23 +6,25 @@ SELECT
 
 --- ================= BODY ====================
 
-select 'title' as component, 'papers : selected' as contents;
+set tile_content="%s
 
+keywords : %i  |  authors : %i"
+
+-- == TITLE
+select 'title' as component, 'papers : freshly selected' as contents;
+
+-- == LIST
 select
-    'table' as component,
-    True as search,
-    False as small,
-    'link' as markdown,
-    True as sort;
+    'card'                     as component,
+    1                          as columns;
 select
-    id,
-    title,
-    author_display as "authors",
-    followed_authors,
-    total_score,
-    keywords_score,
-    authors_score,
-    authors_tags,
-    keywords_tags,
-    format("%s", link) as "link"
-from papers where new = True and total_score > 0 True and viewed = False;
+    title            as title,
+    link as link,
+    format($tile_content, author_display, keywords_score, authors_score) as description_md,
+    --'red'                       as color,
+    format('hexagon-number-%i', total_score)   as icon
+
+from papers
+where viewed=False
+and total_score > 0
+order by total_score desc;

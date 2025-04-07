@@ -25,7 +25,7 @@ DB_PATH = DIR / ".." / "db" / "paperwatch.sqlite"
 
 FEED_EXAMPLE_PATH = DIR / ".." / "example_feeds"
 FEED_EXAMPLE = "physics.atom-ph"
-USE_FEED_EXAMPLE = False
+USE_FEED_EXAMPLE = True
 
 
 # % FUNCTIONS
