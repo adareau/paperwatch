@@ -4,6 +4,7 @@ CREATE TABLE feeds (
     url TEXT NOT NULL,
     display_name TEXT NOT NULL,
     category TEXT,
+    disabled BOOLEAN DEFAULT False,
     --- feed fields structure
     field_link TEXT DEFAULT "link",
     field_title TEXT DEFAULT "title",

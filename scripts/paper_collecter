@@ -67,6 +67,8 @@ def collect_papers(feeds_list):
 
     # -- read feeds
     for feed in feeds_list:
+        if feed["disabled"]:
+            continue
         result = {"feed": feed}
         try:
             feed_papers = get_papers_from_rss(feed["url"])
