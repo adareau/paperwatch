@@ -8,11 +8,7 @@ analyze new papers from database, and assign a score based on keywords
 # % IMPORTS
 
 import json
-import re
-import feedparser as fp
 from pathlib import Path
-from time import mktime
-from datetime import datetime
 
 # % LOCAL IMPORT
 
@@ -187,6 +183,16 @@ def store_results(db_con, results):
     return res
 
 @sqlconnector(DB_PATH)
+def clean_database(db_con):
+    """
+    Remove papers when
+    analyzed = True and total_score=0 and force_keep_after_analysis is False)
+    """
+    write_log("analysis", "clean database")
+    req = "DELETE from papers where analyzed=True and total_score=0 and force_keep_after_analysis=False;"
+    db_con.execute(req)
+
+@sqlconnector(DB_PATH)
 def create_analysis_entry(db_con):
     """
     creates an entry in the analysis table
@@ -247,6 +253,8 @@ def main():
     res = store_results(results)
     # -- 6 - store result
     store_analysis_results(res, analysis_id)
+    # -- 7 - cleanup
+    clean_database()
     # -- DONE
     write_log("analysis", "--- success ---")
 

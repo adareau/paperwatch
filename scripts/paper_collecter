@@ -170,6 +170,7 @@ def parse_papers(result, harvest_id):
         pc["feed_url"] = feed["url"]
         pc["feed_id"] = feed["id"]
         pc["feed_display_name"] = feed["display_name"]
+        pc["force_keep_after_analysis"] = bool(feed["save_all"])
         # harvest
         pc["harvest_id"] = harvest_id
         # append
@@ -184,6 +185,13 @@ def _is_paper_in_db(db_con, link):
     cur = db_con.execute(sql_req)
     res = cur.fetchall()
     return len(res)
+
+
+def _update_paper_force_keep(db_con, p):
+    # - update if true
+    if p["force_keep_after_analysis"]:
+        req = "update papers set force_keep_after_analysis=? where link=?;"
+        db_con.execute(req, (True, p["link"]))
 
 
 def _insert_paper_in_db(db_con, p):
@@ -220,6 +228,7 @@ def store_papers(db_con, collection):
         # - loop on papers
         for p in papers:
             if _is_paper_in_db(db_con, p["link"]):
+                _update_paper_force_keep(db_con, p)
                 continue
             papers_collected_new += 1
             if not _insert_paper_in_db(db_con, p):
@@ -252,6 +261,7 @@ def create_harvest_entry(db_con, feeds):
     last_id = res.fetchone()[0]
     return last_id
 
+
 @sqlconnector(DB_PATH)
 def store_harvest_results(db_con, result, harvest_id):
     """
@@ -260,10 +270,11 @@ def store_harvest_results(db_con, result, harvest_id):
     write_log("harvest", "store harvest result")
     req = "UPDATE harvest SET {} WHERE id = ?;"
     values_str = ",".join([f"{k} = ?" for k in result.keys()])
-    values = list(result.values()) + [harvest_id, ]
+    values = list(result.values()) + [
+        harvest_id,
+    ]
     req = req.format(values_str)
     db_con.execute(req, values)
-
 
 
 # % FOR DEBUGGING
@@ -284,6 +295,7 @@ def collect_papers_from_example():
         "id": 0,
         "url": "http://mockup.feed/rss",
         "display_name": "mockup",
+        "save_all": True,
         "category": "debug",
         "field_date": "published_parsed",
         "field_date_type": "timestruct",
@@ -310,7 +322,10 @@ def collect_papers_from_example():
 
 @sqlconnector(DB_PATH)
 def write_log(db_con, action, details="", error=False):
-    db_con.execute("INSERT INTO log(action, details, error) values(?, ?, ?)", (action, details, error))
+    db_con.execute(
+        "INSERT INTO log(action, details, error) values(?, ?, ?)",
+        (action, details, error),
+    )
 
 
 # % MAIN ROUTINE

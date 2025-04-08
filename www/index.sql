@@ -21,7 +21,7 @@ update papers set viewed=False, selected=False where id=$unselect_paper_id;
 -- ==== CHECK PAPER STATUS
 set papers_to_analyze = select count(*) from papers where analyzed = False;
 set papers_to_review_selected = select count(*) from papers where viewed = False and total_score > 0;
-set papers_to_review_all = select count(*) from papers where viewed = False;
+set papers_to_review_other = select count(*) from papers where viewed = False and analyzed=True and total_score=0;
 
 -- ==== DISPLAY MESSAGE BOXES
 
@@ -32,7 +32,7 @@ set display_new_message_alert = ($papers_to_review_selected > 0
                                   and $select_paper_id is null);
 select
     'alert'                    as component,
-    format('%i newly selected papers to review.', $papers_to_review_selected) as title,
+    format('%i newly spotted papers to review.', $papers_to_review_selected) as title,
     'analyze'                  as icon,
     'teal'                     as color,
     TRUE                       as dismissible
@@ -77,7 +77,7 @@ select
     format('Freshly selected papers (%i)', $papers_to_review_selected) as title,
     TRUE                   as wrap,
     TRUE                   as compact
-where $papers_to_review_all > 0;
+where $papers_to_review_selected > 0;
 select
     title            as title,
     'index.sql?select_paper_id=' || id as edit_link,
@@ -108,23 +108,23 @@ select
     3      as columns;
 select
     (select case when $papers_to_review_selected > 0
-          then format('**%i selected papers to review**', $papers_to_review_selected)
-          else 'no selected paper to review' end) as description_md,
+          then format('**%i new papers spotted**', $papers_to_review_selected)
+          else 'no new paper spotted' end) as description_md,
     ($papers_to_review_selected > 0) as active,
     'papers.selected.sql' as link,
     'green' as color,
     'tag-starred'       as icon;
 select
-    (select case when $papers_to_review_all > 0
-          then format('%i new papers to review', $papers_to_review_all)
-          else 'no paper to review' end) as description_md,
-    ($papers_to_review_all > 0) as active,
+    (select case when $papers_to_review_other > 0
+          then format('%i other papers to check', $papers_to_review_other)
+          else 'no paper to check' end) as description_md,
+    ($papers_to_review_other > 0) as active,
     'blue' as color,
     'papers.all.sql' as link,
     'file-spark'       as icon;
 select
     (select case when $papers_to_analyze > 0
-          then format('%i papers waiting for analysis', $papers_to_review_all)
+          then format('%i papers waiting for analysis', $papers_to_analyze)
           else 'all collected papers are analysed' end) as description_md,
     ($papers_to_analyze > 0) as active,
     (select case when $papers_to_analyze > 0
@@ -167,7 +167,7 @@ from harvest where id=$last_harvest_id;
 
 -- new papers
 select
-    'new' as title,
+    'saved' as title,
     papers_collected_new as description
 from harvest where id=$last_harvest_id;
 

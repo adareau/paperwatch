@@ -33,6 +33,7 @@ CREATE TABLE papers (
     followed_authors TEXT,
     score_detail TEXT,
     new BOOLEAN DEFAULT True,
+    force_keep_after_analysis BOOLEAN,
 
     --- status & score : manual review
     viewed BOOLEAN DEFAULT False,

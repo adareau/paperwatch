@@ -5,8 +5,8 @@
     "menu_item": [
         {"link": "index.sql", "title": "Home"},
         {"title": "Papers", "submenu": [
-            {"link": "/papers.selected.sql", "title": "to review"},
-            {"link": "/papers.new.sql", "title": "all new"},
+            {"link": "/papers.selected.sql", "title": "new (score)"},
+            {"link": "/papers.new.sql", "title": "new (other)"},
             {"link": "/papers.user_selected.sql", "title": "selected"},
             {"link": "/papers.all.sql", "title": "all"}
         ]},

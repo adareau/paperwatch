@@ -21,4 +21,4 @@ select
     analyzed,
     selected,
     format("%s", link) as "link"
-from papers where new=True;
+from papers where new=True and analyzed=True and total_score=0;
