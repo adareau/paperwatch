@@ -108,10 +108,11 @@ def analyze_papers(papers, keywords, authors, analysis_id):
             name = cat["category"]
             score_detail[name] = 0
             for kw in cat["keywords"]:
-                if kw.lower() in summary.lower():
-                    score_detail[name] += 1
-                    keywords_score += 1
-                    keywords_tags.add(name)
+                # let's not include summary in the end..
+                # if kw.lower() in summary.lower():
+                #     score_detail[name] += 1
+                #     keywords_score += 1
+                #     keywords_tags.add(name)
                 if kw.lower() in title.lower():
                     score_detail[name] += 1
                     keywords_score += 1

@@ -12,7 +12,7 @@ import re
 import feedparser as fp
 from pathlib import Path
 from time import mktime
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # % LOCAL IMPORT
 
@@ -24,9 +24,11 @@ DIR = Path(__file__).parents[0]  # returns the script directory
 DB_PATH = DIR / ".." / "db" / "paperwatch.sqlite"
 
 FEED_EXAMPLE_PATH = DIR / ".." / "example_feeds"
-FEED_EXAMPLE = "physics.atom-ph"
+FEED_EXAMPLE = "prl.xml"
 USE_FEED_EXAMPLE = False
 
+PAPER_MAX_AGE = timedelta(days=30)
+PAPER_CUT_DATE = datetime.now() - PAPER_MAX_AGE
 
 # % FUNCTIONS
 
@@ -92,6 +94,7 @@ def _get_authors_list(value, type):
     assert type in implemented_types, f"implemented author types = {implemented_types}"
     match type:
         case "cs-list":
+            value = value.replace(" and ", "")
             aut_list = value.split(",")
             aut_list = [aut.strip() for aut in aut_list]
             regex = re.compile(r"[^a-zA-Z \.-]")
@@ -110,6 +113,8 @@ def _get_tag_list(value, type):
     assert type in implemented_types, f"implemented tag types = {implemented_types}"
     match type:
         case "arxiv":
+            if value is None:
+                return json.dumps([""])
             tag_list = [t["term"] for t in value]
             tag_list = json.dumps(tag_list)
             return tag_list
@@ -127,9 +132,9 @@ def _get_date(value, type):
     ), f"type '{type}' unknown : implemented date types = {implemented_types}"
     match type:
         case "timestruct":
-            date = datetime.fromtimestamp(mktime(value))
-            date = date.strftime("%Y-%m-%d %H:%M:%S")
-            return date
+            dt_obj = datetime.fromtimestamp(mktime(value))
+            date = dt_obj.strftime("%Y-%m-%d %H:%M:%S")
+            return date, dt_obj
 
 
 def parse_papers(result, harvest_id):
@@ -165,7 +170,10 @@ def parse_papers(result, harvest_id):
         # date
         date_value = p.get(feed.get("field_date"))
         date_type = feed.get("field_date_type")
-        pc["date_published"] = _get_date(date_value, date_type)
+        pc["date_published"], dt_object = _get_date(date_value, date_type)
+        # if paper too old, dismiss
+        if dt_object < PAPER_CUT_DATE:
+            continue
         # feed
         pc["feed_url"] = feed["url"]
         pc["feed_id"] = feed["id"]
@@ -297,7 +305,7 @@ def collect_papers_from_example():
         "display_name": "mockup",
         "save_all": True,
         "category": "debug",
-        "field_date": "published_parsed",
+        "field_date": "updated_parsed",
         "field_date_type": "timestruct",
         "field_title": "title",
         "field_link": "link",
@@ -307,7 +315,7 @@ def collect_papers_from_example():
         "field_tags": "tags",
         "field_author_type": "cs-list",
         "field_tags_type": "arxiv",
-        "field_doi": "doi",
+        "field_doi": "prism_doi",
     }
     # read
     example_feed = FEED_EXAMPLE_PATH / FEED_EXAMPLE
