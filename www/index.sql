@@ -120,7 +120,7 @@ select
           else 'no paper to check' end) as description_md,
     ($papers_to_review_other > 0) as active,
     'blue' as color,
-    'papers.all.sql' as link,
+    'papers.new.sql' as link,
     'file-spark'       as icon;
 select
     (select case when $papers_to_analyze > 0
