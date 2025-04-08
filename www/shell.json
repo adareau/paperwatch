@@ -5,9 +5,9 @@
     "menu_item": [
         {"link": "index.sql", "title": "Home"},
         {"title": "Papers", "submenu": [
-            {"link": "/papers.selected.sql", "title": "selection"},
-            {"link": "/papers.new.sql", "title": "new"},
-            {"link": "/papers.user_selected.sql", "title": "my selection"},
+            {"link": "/papers.selected.sql", "title": "to review"},
+            {"link": "/papers.new.sql", "title": "all new"},
+            {"link": "/papers.user_selected.sql", "title": "selected"},
             {"link": "/papers.all.sql", "title": "all"}
         ]},
         {"title": "Log tables", "submenu": [

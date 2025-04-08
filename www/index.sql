@@ -83,14 +83,21 @@ select
     'index.sql?select_paper_id=' || id as edit_link,
     'index.sql?viewed_paper_id=' || id as view_link,
     link as link,
-    author_display as description_md,
-    --'red'                       as color,
-    format('hexagon-number-%i', total_score)   as icon
+    format("%s ```%s``` ", author_display, feed_display_name) as description_md,
+    -- (select case when authors_score > 0 then 'red'
+    --              when total_score > 1 then 'green'
+    --              else 'gray'
+    -- end) as color,
+    (select case when authors_score > 0 then 'user-hexagon'
+                 else format('hexagon-number-%i', total_score)
+    end) as icon
 
 from papers
 where viewed=False
 and total_score > 0
-order by total_score desc
+order by
+    authors_score desc,
+    total_score desc
 limit 10;
 
 
@@ -104,6 +111,7 @@ select
           then format('**%i selected papers to review**', $papers_to_review_selected)
           else 'no selected paper to review' end) as description_md,
     ($papers_to_review_selected > 0) as active,
+    'papers.selected.sql' as link,
     'green' as color,
     'tag-starred'       as icon;
 select
@@ -112,6 +120,7 @@ select
           else 'no paper to review' end) as description_md,
     ($papers_to_review_all > 0) as active,
     'blue' as color,
+    'papers.all.sql' as link,
     'file-spark'       as icon;
 select
     (select case when $papers_to_analyze > 0

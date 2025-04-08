@@ -25,7 +25,7 @@ DB_PATH = DIR / ".." / "db" / "paperwatch.sqlite"
 
 FEED_EXAMPLE_PATH = DIR / ".." / "example_feeds"
 FEED_EXAMPLE = "physics.atom-ph"
-USE_FEED_EXAMPLE = True
+USE_FEED_EXAMPLE = False
 
 
 # % FUNCTIONS
@@ -169,6 +169,7 @@ def parse_papers(result, harvest_id):
         # feed
         pc["feed_url"] = feed["url"]
         pc["feed_id"] = feed["id"]
+        pc["feed_display_name"] = feed["display_name"]
         # harvest
         pc["harvest_id"] = harvest_id
         # append

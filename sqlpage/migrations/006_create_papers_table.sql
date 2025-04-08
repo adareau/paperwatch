@@ -19,6 +19,7 @@ CREATE TABLE papers (
     --- feed data
     date_published DATETIME NOT NULL,
     feed_url TEXT NOT NULL,
+    feed_display_name TEXT NOT NULL,
     feed_id INT NOT NULL,
 
     --- status & score : automatic analysis

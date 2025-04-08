@@ -4,14 +4,35 @@ SELECT
     sqlpage.run_sql('auth.sql') AS properties,
     sqlpage.read_file_as_text('shell.json') AS properties;
 
+--- ================= ACTIONS ====================
+
+-- viewed paper
+update papers set viewed=True where id=$viewed_paper_id;
+-- select paper
+update papers set viewed=True, selected=True where id=$select_paper_id;
+
+-- view all
+update papers set viewed=True where $view_all=1 and total_score>0 and viewed=False;
+-- select all
+update papers set viewed=True, selected=True where $select_all=1 and total_score>0 and viewed=False;
+
 --- ================= BODY ====================
+set papers_to_review_selected = select count(*) from papers where viewed = False and total_score > 0;
 
-set tile_content="%s
+set card_content="%s ```%s```
 
-keywords : %i  |  authors : %i"
+[mark as viewed](papers.selected.sql?viewed_paper_id=%i)  |  [select](papers.selected.sql?select_paper_id=%i)"
+
+set card_footer="keywords:%i | authors:%i | %s"
 
 -- == TITLE
 select 'title' as component, 'papers : freshly selected' as contents;
+
+select 'text' as component,
+(select case when $papers_to_review_selected > 0
+             then format("**%i** new papers to review today.", $papers_to_review_selected)
+                 else 'No papers to review'
+    end) as contents_md;
 
 -- == LIST
 select
@@ -20,11 +41,36 @@ select
 select
     title            as title,
     link as link,
-    format($tile_content, author_display, keywords_score, authors_score) as description_md,
-    --'red'                       as color,
-    format('hexagon-number-%i', total_score)   as icon
+    format($card_content, author_display, feed_display_name, id, id) as description_md,
+    (select case when authors_score > 0 then 'red'
+                 when total_score > 1 then 'green'
+                 else 'gray'
+    end) as color,
+    format($card_footer, keywords_score, authors_score, keywords_tags) as footer_md,
+    (select case when authors_score > 0 then 'user-hexagon'
+                 else format('hexagon-number-%i', total_score)
+    end) as icon
 
 from papers
 where viewed=False
 and total_score > 0
-order by total_score desc;
+order by
+    authors_score desc,
+    total_score desc
+;
+
+select
+    'button' as component
+where $papers_to_review_selected>0;
+select
+    'papers.selected.sql?select_all=1'     as link,
+    'azure' as outline,
+    'Select ALL'  as title,
+    'rosette-discount-check'  as icon
+where $papers_to_review_selected>0;
+select
+    'papers.selected.sql?view_all=1'      as link,
+    'danger' as outline,
+    'Mark ALL as viewed' as title,
+    'eye'  as icon
+where $papers_to_review_selected>0;
