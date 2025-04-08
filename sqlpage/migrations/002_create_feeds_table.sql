@@ -6,6 +6,7 @@ CREATE TABLE feeds (
     category TEXT,
     disabled BOOLEAN DEFAULT False,
     save_all BOOLEAN DEFAULT False,
+    priority INT DEFAULT 0,   -- used to define the order for the harvest
     --- feed fields structure
     field_link TEXT DEFAULT "link",
     field_title TEXT DEFAULT "title",
@@ -28,10 +29,12 @@ INTO feeds(
     url,
     display_name,
     category,
+    priority,
     field_date
 ) VALUES (
     'http://export.arxiv.org/rss/quant-ph',
     'arxiv:quant-ph',
     'arXiv',
+    3,
     'published_parsed'
 );
