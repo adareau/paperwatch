@@ -6,7 +6,7 @@ SELECT
 
 --- ================= BODY ====================
 
-select 'title' as component, 'papers : all' as contents;
+select 'title' as component, 'Selected papers' as contents;
 
 select
     'table' as component,
@@ -15,11 +15,9 @@ select
     'link' as markdown,
     True as sort;
 select
-    id,
     title,
-    author_display as "authors",
-    new,
-    analyzed,
-    selected,
-    format("%s", link) as "link"
+    substring(author_display, 1, 100) as "authors",
+    format("[%s](%s)",feed_display_name, link) as "link",
+    substring(date_added, 1, 10) as "date"
+
 from papers where selected is True;
