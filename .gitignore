@@ -3,7 +3,7 @@ html_out
 *.conf
 test
 sandbox/*
-db/*
+db/*.sqlite
 *.bin
 __venv__
 notes_deploiement.md
