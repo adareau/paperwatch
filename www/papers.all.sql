@@ -1,8 +1,8 @@
 --- ================= HEADER ====================
 SELECT
     'dynamic' AS component,
-    sqlpage.run_sql('auth.sql') AS properties,
-    sqlpage.read_file_as_text('shell.json') AS properties;
+    sqlpage.run_sql('header.auth.sql') AS properties,
+    sqlpage.run_sql('header.shell.sql') AS properties;
 
 --- ================= BODY ====================
 
