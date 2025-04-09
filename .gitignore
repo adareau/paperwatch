@@ -7,3 +7,4 @@ db/*.sqlite
 *.bin
 __venv__
 notes_deploiement.md
+*.code-workspace
