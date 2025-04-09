@@ -31,7 +31,9 @@ select 'title' as component, 'papers : freshly selected' as contents;
 select 'text' as component,
 (select case when $papers_to_review_selected > 0
              then format("**%i** new papers to review today.", $papers_to_review_selected)
-                 else 'No papers to review'
+                 else "No new paper to review
+
+⏭️ maybe you want to [check all collected papers](papers.new.sql)"
     end) as contents_md;
 
 -- == LIST

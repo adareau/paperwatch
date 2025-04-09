@@ -47,6 +47,11 @@ select 'title' as component,
         format("%i new papers to check", $paper_number) as contents
 where $paper_number>0;
 
+select 'text' as component,
+        "⏭️ maybe you want to [check your selection ?](papers.user_selected.sql)" as contents_md
+where $paper_number=0;
+
+
 -- FEED SELECTION FORM
 
 select 'form' as component,
