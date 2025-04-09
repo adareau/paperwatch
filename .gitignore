@@ -6,3 +6,4 @@ sandbox/*
 db/*
 *.bin
 __venv__
+notes_deploiement.md
