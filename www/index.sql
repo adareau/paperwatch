@@ -186,6 +186,14 @@ select
     'red'                as color
 from harvest where id=$last_harvest_id and papers_errors >0;
 
+
+-- launch button
+select
+    'harvest now'      as description,
+    'actions.harvest.sql'      as  link,
+    'purple'                  as color,
+    'file-spark'     as icon;
+
 -- ==== LAST ANALYSIS
 
 set last_analysis_id = select max(id) from analysis;
@@ -229,3 +237,10 @@ select
     'stats.analysis.sql?id=' || $last_analysis_id as link,
     'blue'                  as color,
     'device-desktop-analytics'     as icon;
+
+-- launch button
+select
+    'analyze now'      as description,
+    'actions.analyze.sql'      as  link,
+    'purple'                  as color,
+    'automation'     as icon;
