@@ -21,7 +21,7 @@ set papers_to_review_selected = select count(*) from papers where viewed = False
 
 set card_content="%s ```%s```
 
-[mark as viewed](papers.selected.sql?viewed_paper_id=%i)  |  [select](papers.selected.sql?select_paper_id=%i)"
+[mark as viewed](papers.selected.sql?viewed_paper_id=%i)  |  [select](papers.selected.sql?select_paper_id=%i)  | [details](papers.details.sql?id=%i)"
 
 set card_footer="keywords:%i | authors:%i | %s"
 
@@ -43,7 +43,7 @@ select
 select
     title            as title,
     link as link,
-    format($card_content, author_display, feed_display_name, id, id) as description_md,
+    format($card_content, author_display, feed_display_name, id, id, id) as description_md,
     (select case when authors_score > 0 then 'red'
                  when total_score > 1 then 'green'
                  else 'gray'

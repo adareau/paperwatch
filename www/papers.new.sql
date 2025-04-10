@@ -78,7 +78,7 @@ where $paper_number>0;
 -- PAPER DISPLAY
 set paper_content= "%s[<b><font color='#182433'> %s </font></b>](%s)<br/>
 %s <br/>
-[%s](papers.new.sql?%s=%i&selected_feed=%s)
+[%s](papers.new.sql?%s=%i&selected_feed=%s) | [details](papers.details.sql?id=%i)
 ";
 
 select 'text' as component;
@@ -99,7 +99,8 @@ select
                  else 'select_id'
             end),
             id,
-            sqlpage.url_encode($selected_feed)
+            sqlpage.url_encode($selected_feed),
+            id
     ) as unsafe_contents_md
 from papers
 where viewed=False
