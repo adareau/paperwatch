@@ -8,11 +8,22 @@ SELECT
 select 'title' as component, 'log : analysis' as contents;
 
 select
-    'table' as component,
-    True as sort,
-    True as search,
-    True as small;
+    'list'                 as component,
+    TRUE                   as wrap,
+    TRUE                   as compact
 
 select
-    *
-from analysis;
+    timestamp as title,
+    format("analyzed : %i | selected : %i"
+    ,papers_analyzed
+    ,papers_selected
+    ) as description_md,
+    "stats.analysis.sql?id=" || id as link,
+    (select case when success is True
+          then 'green'
+          else 'red' end) as color
+
+from analysis
+order by id desc
+limit 50
+;

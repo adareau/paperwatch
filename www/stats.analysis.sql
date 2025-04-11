@@ -10,7 +10,15 @@ SELECT
     sqlpage.run_sql('header.auth.sql') AS properties,
     sqlpage.run_sql('header.shell.sql') AS properties;
 
---- ================= ACTION ====================
+--- ================= CONTENT ====================
+
+select
+    'button' as component;
+select
+    'Back to analysis list'   as title,
+    'tables.analysis.sql'     as link,
+    'arrow-back-up' as icon,
+    'Back to analysis list' as tooltip;
 
 --- MAIN INFOS
 select
