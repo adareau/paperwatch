@@ -6,7 +6,7 @@ SELECT
 
 --- ================= ACTION ====================
 -- select / unselect
-update papers set selected=True where id=$select_id;
+update papers set selected=True, date_selected=date()  where id=$select_id;
 update papers set selected=False where id=$unselect_id;
 
 -- set feed as viewed

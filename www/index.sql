@@ -11,7 +11,7 @@ update papers set viewed=True where id=$viewed_paper_id;
 -- unview paper
 update papers set viewed=False where id=$unview_paper_id;
 -- select paper
-update papers set viewed=True, selected=True where id=$select_paper_id;
+update papers set viewed=True, selected=True, date_selected=date() where id=$select_paper_id;
 -- unselect paper
 update papers set viewed=False, selected=False where id=$unselect_paper_id;
 

@@ -9,12 +9,12 @@ SELECT
 -- viewed paper
 update papers set viewed=True where id=$viewed_paper_id;
 -- select paper
-update papers set viewed=True, selected=True where id=$select_paper_id;
+update papers set viewed=True, selected=True, date_selected=date() where id=$select_paper_id;
 
 -- view all
 update papers set viewed=True where $view_all=1 and total_score>0 and viewed=False;
 -- select all
-update papers set viewed=True, selected=True where $select_all=1 and total_score>0 and viewed=False;
+update papers set viewed=True, selected=True, date_selected=date() where $select_all=1 and total_score>0 and viewed=False;
 
 --- ================= BODY ====================
 set papers_to_review_selected = select count(*) from papers where viewed = False and total_score > 0;

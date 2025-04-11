@@ -12,7 +12,7 @@ SELECT
 
 --- ================= ACTION ====================
 --- select / unselect
-update papers set selected=True where id=$id and $select=1;
+update papers set selected=True, date_selected=date() where id=$id and $select=1;
 update papers set selected=False where id=$id and $unselect=1;
 --- view / unview
 update papers set viewed=True where id=$id and $view=1;

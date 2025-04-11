@@ -8,20 +8,104 @@ SELECT
 
 select 'title' as component, 'Selected papers' as contents;
 
-select
-    'table' as component,
-    True as search,
-    True as striped_rows,
-    False as small,
-    'link' as markdown,
-    'authors' as markdown,
-    'action' as markdown,
-    True as sort;
-select
-    title,
-    substring(author_display, 1, 100) as "authors",
-    format("[%s](%s)",feed_display_name, link) as "link",
-    substring(date_added, 1, 10) as "date",
-    format("[details](papers.details.sql?id=%i)", id) as "action"
+------------------- TODAY's SELECTION ----------------------
 
-from papers where selected is True;
+set description_fmt = "%s ```%s```"
+
+select
+    'list'                 as component,
+    "Today's selection"       as title,
+    TRUE                   as wrap,
+    True                   as compact;
+
+select
+    title            as title,
+    -- 'index.sql?select_paper_id=' || id as edit_link,
+    'papers.details.sql?id=' || id as view_link,
+    link as link,
+    format($description_fmt
+            ,author_display
+            ,feed_display_name
+            ) as description_md,
+    (select case when authors_score > 0 then 'red'
+                 when total_score > 1 then 'green'
+                 else 'gray'
+    end) as color
+
+from papers
+where selected=True and date_selected = DATE()
+order by
+    authors_score desc,
+    total_score desc
+;
+
+--------------------------------------------------------
+
+select
+    'divider' as component;
+
+------------------- LAST 7 DAYS  ----------------------
+
+set description_fmt = "**%s** ```%s```"
+
+select
+    'list'                 as component,
+    "Recently selected (past 7 days)"       as title,
+    TRUE                   as wrap,
+    True                   as compact;
+
+select
+    -- title            as title,
+    -- 'index.sql?select_paper_id=' || id as edit_link,
+    'papers.details.sql?id=' || id as view_link,
+    link as link,
+    format($description_fmt
+            ,title
+            ,feed_display_name
+            ) as description_md,
+    (select case when authors_score > 0 then 'red'
+                 when total_score > 1 then 'green'
+                 else 'gray'
+    end) as color
+
+from papers
+where selected=True and cast(JulianDay(date_selected) - JulianDay(date()) as integer) < 8
+order by
+    date_selected desc,
+    total_score desc
+;
+
+--------------------------------------------------------
+
+select
+    'divider' as component;
+
+------------------- LAST 10 added  ----------------------
+
+set description_fmt = "**%s** ```%s```"
+
+select
+    'list'                 as component,
+    "Last 20 papers added & selected"       as title,
+    TRUE                   as wrap,
+    True                   as compact;
+
+select
+    -- title            as title,
+    -- 'index.sql?select_paper_id=' || id as edit_link,
+    'papers.details.sql?id=' || id as view_link,
+    link as link,
+    format($description_fmt
+            ,title
+            ,feed_display_name
+            ) as description_md,
+    (select case when authors_score > 0 then 'red'
+                 when total_score > 1 then 'green'
+                 else 'gray'
+    end) as color
+
+from papers
+where selected=True
+order by id desc
+limit 20
+;
