@@ -68,8 +68,10 @@ select
     TRUE                   as compact
 
 select
-    format("```id:%02d``` > %s"
+    format("```id:%02d``` > **%s** > collected : %i | kept : %i"
     ,json_extract(j.value, '$.id')
     ,json_extract(j.value, '$.display_name')
+    ,json_extract(j.value, '$.papers_collected')
+    ,json_extract(j.value, '$.papers_kept')
     ) as description_md
 from json_each((select feeds from harvest where id=$id)) j;

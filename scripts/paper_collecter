@@ -270,12 +270,35 @@ def create_harvest_entry(db_con, feeds):
     return last_id
 
 
+def update_feed_stats(feeds, collection):
+    """update feeds information to get stats per feed"""
+    write_log("harvest", "compute feed stats")
+    # --  stats per feed
+    stats_per_feed = {}
+    for res in collection:
+        feed_id = res["feed"]["id"]
+        stats_per_feed[feed_id] = {
+            "collected": len(res["papers_raw"]),
+            "kept": len(res["papers"]),
+        }
+    # -- create new feed list
+    feed_with_stats = []
+    default = {"collected": 0, "kept": 0}
+    for f in feeds:
+        stats = stats_per_feed.get(f["id"], default)
+        f["papers_collected"] = stats["collected"]
+        f["papers_kept"] = stats["kept"]
+        feed_with_stats.append(f)
+    return feed_with_stats
+
+
 @sqlconnector(DB_PATH)
-def store_harvest_results(db_con, result, harvest_id):
+def store_harvest_results(db_con, result, harvest_id, feeds):
     """
     store harvest results in the harvest table
     """
     write_log("harvest", "store harvest result")
+    # -- Global results
     req = "UPDATE harvest SET {} WHERE id = ?;"
     values_str = ",".join([f"{k} = ?" for k in result.keys()])
     values = list(result.values()) + [
@@ -283,6 +306,17 @@ def store_harvest_results(db_con, result, harvest_id):
     ]
     req = req.format(values_str)
     db_con.execute(req, values)
+
+    # -- Feed details
+    # - prepare request
+    feed_info = [
+        {k: f[k] for k in ["id", "display_name", "papers_collected", "papers_kept"]}
+        for f in feeds
+    ]
+    feed_info_json = json.dumps(feed_info)
+    sql_req = f"UPDATE harvest SET feeds=? where id=?;"
+    # - insert new entry with feed info
+    db_con.execute(sql_req, (feed_info_json, harvest_id))
 
 
 # % FOR DEBUGGING
@@ -359,8 +393,10 @@ def main():
         parse_papers(res, harvest_id)
     # -- 5 - store papers in database
     result = store_papers(collection)
-    # -- 6 - write result
-    store_harvest_results(result, harvest_id)
+    # -- 6 - update feeds stats
+    feeds = update_feed_stats(feeds, collection)
+    # -- 7 - write result
+    store_harvest_results(result, harvest_id, feeds)
     write_log("harvest", "--- success ---")
 
 
