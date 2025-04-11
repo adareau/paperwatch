@@ -67,7 +67,7 @@ def load_authors(db_con):
 def fetch_new_papers(db_con):
     write_log("analysis", "fetch new papers")
     # -- prepare sql request
-    fields = ["author", "title", "summary", "id"]
+    fields = ["author", "title", "summary", "id", "feed_id", "feed_display_name"]
     sql_req = f"select {",".join(fields)} from papers where analyzed=False;"
     # -- store results
     papers = []
@@ -160,6 +160,7 @@ def _insert_analysis_result(db_con, id, res):
         return 0
     return 1
 
+
 @sqlconnector(DB_PATH)
 def store_results(db_con, results):
     """
@@ -174,7 +175,7 @@ def store_results(db_con, results):
     for id, res in results.items():
         if _insert_analysis_result(db_con, id, res):
             papers_analyzed += 1
-            papers_selected += (res["total_score"] > 0)
+            papers_selected += res["total_score"] > 0
 
     # -- return result
     res = {}
@@ -182,6 +183,7 @@ def store_results(db_con, results):
     res["papers_selected"] = papers_selected
     res["success"] = True
     return res
+
 
 @sqlconnector(DB_PATH)
 def clean_database(db_con):
@@ -192,6 +194,7 @@ def clean_database(db_con):
     write_log("analysis", "clean database")
     req = "DELETE from papers where analyzed=True and total_score=0 and force_keep_after_analysis=False;"
     db_con.execute(req)
+
 
 @sqlconnector(DB_PATH)
 def create_analysis_entry(db_con):
@@ -210,12 +213,40 @@ def create_analysis_entry(db_con):
     return last_id
 
 
+def prepare_stats(results, papers):
+    """
+    prepare stats to be stored in the analysis database
+    """
+    write_log("analysis", "prepare stats")
+
+    # -- stats
+    stats = {}
+    for p in papers:
+        pid = p["id"]
+        res = results[pid]
+        fid = p["feed_id"]
+        if fid not in stats:
+            stats[fid] = {
+                "feed_id": fid,
+                "feed_display_name": p["feed_display_name"],
+                "analyzed_papers":0,
+                "selected_papers":0,
+            }
+        stats[fid]["analyzed_papers"] += 1
+        stats[fid]["selected_papers"] += (res["total_score"] > 0)
+
+    # -- convert to list
+    stats_list = [s for s in stats.values()]
+    return stats_list
+
+
 @sqlconnector(DB_PATH)
-def store_analysis_results(db_con, result, analysis_id):
+def store_analysis_results(db_con, result, stats, analysis_id):
     """
     store analysis results in the analysis table
     """
     write_log("analysis", "store analysis result")
+    # -- global results
     req = "UPDATE analysis SET {} WHERE id = ?;"
     values_str = ",".join([f"{k} = ?" for k in result.keys()])
     values = list(result.values()) + [
@@ -223,6 +254,12 @@ def store_analysis_results(db_con, result, analysis_id):
     ]
     req = req.format(values_str)
     db_con.execute(req, values)
+    # -- per feed stats
+    # - prepare request
+    stats_json = json.dumps(stats)
+    sql_req = f"UPDATE analysis SET log=? where id=?;"
+    # - insert new entry with feed info
+    db_con.execute(sql_req, (stats_json, analysis_id))
 
 
 # % FOR DEBUGGING
@@ -252,9 +289,11 @@ def main():
     results = analyze_papers(papers, keywords, authors, analysis_id)
     # -- 5 - update papers table
     res = store_results(results)
-    # -- 6 - store result
-    store_analysis_results(res, analysis_id)
-    # -- 7 - cleanup
+    # -- 6 - prepare stats
+    stats = prepare_stats(results, papers)
+    # -- 7 - store result
+    store_analysis_results(res, stats, analysis_id)
+    # -- 8 - cleanup
     clean_database()
     # -- DONE
     write_log("analysis", "--- success ---")
