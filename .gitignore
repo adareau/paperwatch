@@ -8,3 +8,4 @@ db/*.sqlite
 __venv__
 notes_deploiement.md
 *.code-workspace
+test.sql
