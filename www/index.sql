@@ -152,10 +152,10 @@ from harvest where id=$last_harvest_id;
 -- status
 select
     'Status' as title,
-    (select case when $last_harvest_id is True
+    (select case when $last_harvest_success is True
           then 'success'
           else 'error' end) as description,
-    (select case when $last_harvest_id is True
+    (select case when $last_harvest_success is True
           then 'green'
           else 'red' end) as color;
 
@@ -212,10 +212,10 @@ from analysis where id=$last_analysis_id;
 -- status
 select
     'Status' as title,
-    (select case when $last_analysis_id is True
+    (select case when $last_analysis_success is True
           then 'success'
           else 'error' end) as description,
-    (select case when $last_analysis_id is True
+    (select case when $last_analysis_success is True
           then 'green'
           else 'red' end) as color;
 

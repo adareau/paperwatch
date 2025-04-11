@@ -132,9 +132,11 @@ select
     from papers where id=$id;
 select
     'harvest id' as title,
+    'stats.harvest.sql?id=' || harvest_id as link,
     harvest_id    as description
     from papers where id=$id;
 select
     'analysis id' as title,
+    'stats.analysis.sql?id=' || analysis_id as link,
     analysis_id    as description
     from papers where id=$id;
