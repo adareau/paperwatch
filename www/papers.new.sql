@@ -10,7 +10,7 @@ update papers set selected=True, date_selected=date()  where id=$select_id;
 update papers set selected=False where id=$unselect_id;
 
 -- set feed as viewed
-update papers set viewed=True where feed_id=$feed_id and $view_all=1;
+update papers set viewed=True where feed_id=$feed_id and analyzed=True and total_score=0 and $view_all=1;
 --- ================= DATA ====================
 
 set first_unread_feed = select DISTINCT feed_display_name
